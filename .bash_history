@@ -6,3 +6,7 @@ npm install jose
 
 npm install nodemailer
 npm install --save-dev @types/nodemailer
+
+# Устанавливаю Supabase
+
+npm install @supabase/ssr
