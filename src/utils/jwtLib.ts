@@ -1,4 +1,4 @@
-import { SignJWT } from "jose";
+import { SignJWT, jwtVerify } from "jose";
 
 const SECRET_STRING_KEY = process.env.JWT_SECRET || "secret";
 const JWT_KEY = new TextEncoder().encode(SECRET_STRING_KEY);
@@ -48,4 +48,28 @@ export async function encrypt(payload: ISessionJwtPayload): Promise<string> {
     .setExpirationTime("10 sec from now")
     .sign(JWT_KEY);
   return JWT;
+}
+
+/**
+ *
+ * @param stringJwt - JWT формата aaa.ddd.kkk
+ * 
+ * Пусть у нас есть токен формата aaa.ddd.kkk, тогда функция decrypt("aaa.ddd.kkk") вернернет JS объект:
+ * ```js
+ * {
+ *      data: { email: 'pavel@example.local', name: 'Pavel' },
+ *      exp: 1782781111,
+ *      iat: 1782781101,
+ * }
+ * ```
+ * 
+ * @returns payload - данные в JS объекте
+ */
+export async function decrypt(stringJwt: string): Promise<ISessionJwtPayload> {
+  const { payload } = await jwtVerify(
+    stringJwt,
+    JWT_KEY,
+    { algorithms: [JWT_ALGORITHM] },
+  );
+  return payload as ISessionJwtPayload;
 }
