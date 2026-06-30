@@ -10,3 +10,4 @@ npm install --save-dev @types/nodemailer
 # Устанавливаю Supabase
 
 npm install @supabase/ssr
+npm install @supabase/supabase-js
