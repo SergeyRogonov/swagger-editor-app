@@ -5,3 +5,4 @@ npm install jose
 # Устанавливаю библиотеку для отправки почты
 
 npm install nodemailer
+npm install --save-dev @types/nodemailer
