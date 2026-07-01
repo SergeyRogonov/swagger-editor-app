@@ -26,3 +26,7 @@ npx supabase migration list
 npx supabase migration list
 npx supabase migration new accessToken
 npx supabase migration list
+
+npx supabase migration list
+npx supabase db push
+npx supabase migration list
