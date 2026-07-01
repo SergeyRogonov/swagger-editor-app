@@ -5,8 +5,8 @@ const JWT_KEY = new TextEncoder().encode(SECRET_STRING_KEY);
 const JWT_ALGORITHM: string = 'HS256';
 
 interface IUserJwtData {
-  email: string;
-  name: string;
+  userId: number;
+  type: 'access' | 'refresh';
 }
 
 interface ISessionJwtPayload {
@@ -32,7 +32,7 @@ interface ISessionJwtPayload {
  *  - ddd - данные c exp и iat
  *      ```
  *      {
- *           data: { email: "pavel@example.local", "name": "Pavel" },
+ *           data: { userId: 1, type: 'access' },
  *           exp: 1782781111,
  *           iat: 1782781101
  *      }
@@ -57,7 +57,7 @@ export async function encrypt(payload: ISessionJwtPayload): Promise<string> {
  * Пусть у нас есть токен формата aaa.ddd.kkk, тогда функция decrypt("aaa.ddd.kkk") вернернет JS объект:
  * ```js
  * {
- *      data: { email: 'pavel@example.local', name: 'Pavel' },
+ *      data: { userId: 1, type: 'access' },
  *      exp: 1782781111,
  *      iat: 1782781101,
  * }

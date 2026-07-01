@@ -1,4 +1,6 @@
+import { ISupabaseUsersDto } from "@/app/dto/users";
 import isValidEmail from "@/utils/isValidEmail/isValidEmail";
+import { encrypt } from "@/utils/jwtLib";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -57,7 +59,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { data: newUser, error: errorCreateNewUser } = await supabase
+    const { data: newUser, error: errorCreateNewUser } = (await supabase
       .from("users")
       .insert([
         {
@@ -65,7 +67,7 @@ export async function POST(request: NextRequest) {
           passwordHash: password,
         },
       ])
-      .select();
+      .select()) as ISupabaseUsersDto;
 
     if (errorCreateNewUser) {
       return NextResponse.json(
@@ -76,11 +78,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log(newUser);
+    const USER_ID = newUser[0].id;
+    const ACCESS_TOKEN = await encrypt({
+      data: {
+        userId: USER_ID,
+        type: "access"
+      }
+    });
 
     return NextResponse.json(
       {
         message: "Вы зарегистрированы",
+        data: {
+          accessToken: ACCESS_TOKEN
+        }
       },
       { status: 201 },
     );
