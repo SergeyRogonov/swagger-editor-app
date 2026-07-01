@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     const { data: usersByEmail, error: errorFindUserByEmail } = (await supabase
       .from("users")
-      .select("id, passwordHash")
+      .select("id, password_hash")
       .eq("email", email)
       .limit(1)) as ISupabasePasswordUsersDto;
 
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (usersByEmail[0].passwordHash !== password) {
+    if (usersByEmail[0].password_hash !== password) {
       return NextResponse.json(
         {
           message: "Не верный пароль",

@@ -3,7 +3,7 @@ import { PostgrestError } from "@supabase/supabase-js";
 interface IUserDto {
   id: number;
   email: string;
-  passwordHash: string;
+  password_hash: string;
   created_at: string;
 }
 
@@ -15,7 +15,7 @@ interface ISupabaseUsersDto {
 interface ISupabasePasswordUsersDto {
   data: Array<{
     id: IUserDto["id"];
-    passwordHash: IUserDto["passwordHash"];
+    password_hash: IUserDto["password_hash"];
   }>;
   error: PostgrestError | null;
 }

@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
       .insert([
         {
           email: email,
-          passwordHash: password,
+          password_hash: password,
         },
       ])
       .select()) as ISupabaseUsersDto;
