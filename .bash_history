@@ -13,3 +13,4 @@ npm install @supabase/ssr
 npm install @supabase/supabase-js
 
 npx supabase login
+npx supabase link --project-ref jefpdlgqetdhgyuytvch
