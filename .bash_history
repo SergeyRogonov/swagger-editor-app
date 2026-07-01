@@ -17,7 +17,12 @@ npx supabase link --project-ref jefpdlgqetdhgyuytvch
 
 npx supabase migration list
 npx supabase migration new users
+npx supabase migration list
 
 npx supabase migration list
 npx supabase db push
+npx supabase migration list
+
+npx supabase migration list
+npx supabase migration new accessToken
 npx supabase migration list
