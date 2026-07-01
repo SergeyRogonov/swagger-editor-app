@@ -19,5 +19,22 @@
     },
     "technologiesLabel": "Технологии",
     "resourcesLabel": "Ресурсы"
+  },
+
+  "editor": {
+    "toolbar": {
+      "clear": "Очистить редактор",
+      "load": "Загрузить файл"
+    },
+    "formatToggle": {
+      "toJson": "Преобразовать в JSON",
+      "toYaml": "Преобразовать в YAML"
+    },
+    "save": {
+      "button": "Сохранить схему"
+    },
+    "validation": {
+      "title": "Ошибка проверки"
+    }
   }
 }

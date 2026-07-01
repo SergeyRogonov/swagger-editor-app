@@ -19,5 +19,22 @@
     },
     "technologiesLabel": "Technologies",
     "resourcesLabel": "Resources"
+  },
+
+  "editor": {
+    "toolbar": {
+      "clear": "Clear Editor",
+      "load": "Load File"
+    },
+    "formatToggle": {
+      "toJson": "Convert to JSON",
+      "toYaml": "Convert to YAML"
+    },
+    "save": {
+      "button": "Save Schema"
+    },
+    "validation": {
+      "title": "Validation failed"
+    }
   }
 }
