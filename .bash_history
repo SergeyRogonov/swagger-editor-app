@@ -11,3 +11,5 @@ npm install --save-dev @types/nodemailer
 
 npm install @supabase/ssr
 npm install @supabase/supabase-js
+
+npx supabase login
