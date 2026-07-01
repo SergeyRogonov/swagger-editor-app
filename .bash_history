@@ -14,3 +14,5 @@ npm install @supabase/supabase-js
 
 npx supabase login
 npx supabase link --project-ref jefpdlgqetdhgyuytvch
+
+npx supabase migration new users
