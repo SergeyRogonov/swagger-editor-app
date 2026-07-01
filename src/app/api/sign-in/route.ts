@@ -1,0 +1,96 @@
+import { ISupabasePasswordUsersDto, ISupabaseUsersDto } from "@/app/dto/users";
+import isValidEmail from "@/utils/isValidEmail/isValidEmail";
+import { encrypt } from "@/utils/jwtLib";
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+
+    const { email, password } = body;
+
+    if (!email) {
+      return NextResponse.json(
+        { message: "Не указан параметр email" },
+        { status: 400 },
+      );
+    }
+
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        { message: "Вы передаете не валидный email" },
+        { status: 400 },
+      );
+    }
+
+    if (!password) {
+      return NextResponse.json(
+        { message: "Не указан параметр password" },
+        { status: 400 },
+      );
+    }
+
+    const cookieStore = await cookies();
+    const supabase = await createClient(cookieStore);
+
+    const { data: usersByEmail, error: errorFindUserByEmail } = (await supabase
+      .from("users")
+      .select("id, passwordHash")
+      .eq("email", email)
+      .limit(1)) as ISupabasePasswordUsersDto;
+
+    if (errorFindUserByEmail) {
+      return NextResponse.json(
+        {
+          message: errorFindUserByEmail.message,
+        },
+        { status: 500 },
+      );
+    }
+
+    if (usersByEmail.length == 0) {
+      return NextResponse.json(
+        {
+          message: "Пользователь с таким email не зарегистрирован",
+        },
+        { status: 404 },
+      );
+    }
+
+    if (usersByEmail[0].passwordHash !== password) {
+      return NextResponse.json(
+        {
+          message: "Не верный пароль",
+        },
+        { status: 409 },
+      );
+    }
+
+    const USER_ID = usersByEmail[0].id;
+    const ACCESS_TOKEN = await encrypt({
+      data: {
+        userId: USER_ID,
+        type: "access",
+      },
+    });
+
+    return NextResponse.json(
+      {
+        message: "Вы авторизованы",
+        data: {
+          accessToken: ACCESS_TOKEN,
+        },
+      },
+      { status: 200 },
+    );
+  } catch (exception) {
+    return NextResponse.json(
+      {
+        message: `${exception}`,
+      },
+      { status: 500 },
+    );
+  }
+}

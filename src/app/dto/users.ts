@@ -8,8 +8,16 @@ interface IUserDto {
 }
 
 interface ISupabaseUsersDto {
-    data: IUserDto[];
-    error: PostgrestError | null;
+  data: IUserDto[];
+  error: PostgrestError | null;
 }
 
-export type { IUserDto, ISupabaseUsersDto };
+interface ISupabasePasswordUsersDto {
+  data: Array<{
+    id: IUserDto["id"];
+    passwordHash: IUserDto["passwordHash"];
+  }>;
+  error: PostgrestError | null;
+}
+
+export type { IUserDto, ISupabaseUsersDto, ISupabasePasswordUsersDto };
