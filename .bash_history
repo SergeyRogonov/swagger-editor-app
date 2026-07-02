@@ -40,3 +40,4 @@ npm install --save-dev @types/bcrypt
 
 npm install react-hook-form
 npm install yup
+npm install @hookform/resolvers
