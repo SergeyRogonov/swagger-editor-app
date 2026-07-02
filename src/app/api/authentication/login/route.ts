@@ -1,4 +1,5 @@
-import { ISupabasePasswordUsersDto, ISupabaseUsersDto } from "@/app/dto/users";
+import { ISupabasePasswordUsersDto } from "@/app/dto/users";
+import { setAccessTokenCookie } from "@/utils/cookieHelper/cookieHelper";
 import isValidEmail from "@/utils/isValidEmail/isValidEmail";
 import { encrypt } from "@/utils/jwtLib";
 import { createClient } from "@/utils/supabase/server";
@@ -76,7 +77,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json(
+    const RESPONSE = NextResponse.json(
       {
         message: "Вы авторизованы",
         data: {
@@ -85,6 +86,10 @@ export async function POST(request: NextRequest) {
       },
       { status: 200 },
     );
+
+    setAccessTokenCookie(RESPONSE, ACCESS_TOKEN);
+
+    return RESPONSE;
   } catch (exception) {
     return NextResponse.json(
       {

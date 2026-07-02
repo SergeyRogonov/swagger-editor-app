@@ -1,11 +1,12 @@
 import { ISupabaseUsersDto } from "@/app/dto/users";
+import { setAccessTokenCookie } from "@/utils/cookieHelper/cookieHelper";
 import isValidEmail from "@/utils/isValidEmail/isValidEmail";
 import { encrypt } from "@/utils/jwtLib";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest, response: NextResponse) {
   try {
     const body = await request.json();
 
@@ -82,16 +83,18 @@ export async function POST(request: NextRequest) {
     const ACCESS_TOKEN = await encrypt({
       data: {
         userId: USER_ID,
-        type: "access"
-      }
+        type: "access",
+      },
     });
+
+    setAccessTokenCookie(response, ACCESS_TOKEN);
 
     return NextResponse.json(
       {
         message: "Вы зарегистрированы",
         data: {
-          accessToken: ACCESS_TOKEN
-        }
+          accessToken: ACCESS_TOKEN,
+        },
       },
       { status: 201 },
     );
