@@ -87,6 +87,27 @@ export async function POST(request: NextRequest, response: NextResponse) {
       },
     });
 
+    const { error: errorInsertAccessToken } = await supabase
+      .from("access_tokens")
+      .insert([
+        {
+          id_user: USER_ID,
+          access_token: ACCESS_TOKEN,
+          ip_x_forwarded_for: request.headers.get("x-forwarded-for"),
+          ip_x_real_ip: request.headers.get("x-real-ip"),
+          ip_cf_connecting_ip: request.headers.get("cf-connecting-ip"),
+        },
+      ]);
+
+    if (errorInsertAccessToken) {
+      return NextResponse.json(
+        {
+          message: errorInsertAccessToken.message,
+        },
+        { status: 500 },
+      );
+    }
+
     setAccessTokenCookie(response, ACCESS_TOKEN);
 
     return NextResponse.json(
