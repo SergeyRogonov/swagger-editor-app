@@ -35,3 +35,7 @@ npx supabase migration list
 
 npm install bcrypt
 npm install --save-dev @types/bcrypt
+
+# Устанавливаю библиотеку для работы с формой
+
+npm install react-hook-form
