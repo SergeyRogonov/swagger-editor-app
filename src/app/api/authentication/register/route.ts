@@ -1,5 +1,6 @@
 import { ISupabaseUsersDto } from "@/app/dto/users";
 import { setAccessTokenCookie } from "@/utils/cookieHelper/cookieHelper";
+import { generateHashPassword } from "@/utils/hashPasswordLib/hashPasswordLib";
 import isValidEmail from "@/utils/isValidEmail/isValidEmail";
 import { encrypt } from "@/utils/jwtLib";
 import { createClient } from "@/utils/supabase/server";
@@ -60,12 +61,14 @@ export async function POST(request: NextRequest, response: NextResponse) {
       );
     }
 
+    const HASH_PASSWORD = await generateHashPassword(password);
+
     const { data: newUser, error: errorCreateNewUser } = (await supabase
       .from("users")
       .insert([
         {
           email: email,
-          password_hash: password,
+          password_hash: HASH_PASSWORD,
         },
       ])
       .select()) as ISupabaseUsersDto;
@@ -108,9 +111,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
       );
     }
 
-    setAccessTokenCookie(response, ACCESS_TOKEN);
-
-    return NextResponse.json(
+    const RESPONSE = NextResponse.json(
       {
         message: "Вы зарегистрированы",
         data: {
@@ -119,6 +120,10 @@ export async function POST(request: NextRequest, response: NextResponse) {
       },
       { status: 201 },
     );
+
+    setAccessTokenCookie(RESPONSE, ACCESS_TOKEN);
+
+    return RESPONSE;
   } catch (exception) {
     return NextResponse.json(
       {

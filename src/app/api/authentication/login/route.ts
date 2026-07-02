@@ -1,5 +1,6 @@
 import { ISupabasePasswordUsersDto } from "@/app/dto/users";
 import { setAccessTokenCookie } from "@/utils/cookieHelper/cookieHelper";
+import { verifyPassword } from "@/utils/hashPasswordLib/hashPasswordLib";
 import isValidEmail from "@/utils/isValidEmail/isValidEmail";
 import { encrypt } from "@/utils/jwtLib";
 import { createClient } from "@/utils/supabase/server";
@@ -60,7 +61,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (usersByEmail[0].password_hash !== password) {
+    const HASH_PASSWORD = usersByEmail[0].password_hash;
+    const IS_MATCH = await verifyPassword(password, HASH_PASSWORD);
+    if (!IS_MATCH) {
       return NextResponse.json(
         {
           message: "Не верный пароль",
