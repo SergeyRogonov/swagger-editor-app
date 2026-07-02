@@ -34,3 +34,4 @@ npx supabase migration list
 # Устанавливаю библиотеку для генерации хэша пароля
 
 npm install bcrypt
+npm install --save-dev @types/bcrypt
