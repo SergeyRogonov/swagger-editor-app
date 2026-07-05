@@ -14,6 +14,7 @@ interface IReactHookFormData {
 
 export default function SignUpPage() {
   const [isFetch, setIsFetch] = useState<boolean>(false);
+  const [fetchError, setFetchError] = useState<null | string>(null);
 
   const LABEL_CLASS_NAME =
     "block text-sm font-medium text-slate-700 dark:text-slate-300";
@@ -55,16 +56,30 @@ export default function SignUpPage() {
 
       const HTTP_STATUS = RESPOSNE.status;
       if (HTTP_STATUS !== 201) {
-        const TEXT = await RESPOSNE.text();
-        throw Error(`HTTP ${HTTP_STATUS}\n${TEXT}`);
+        let message = "";
+        try {
+          const DATA = await RESPOSNE.json();
+          message = DATA.message;
+        } catch (exception) {
+          const TEXT = await RESPOSNE.text();
+          message = TEXT;
+        }
+
+        throw Error(`${message}`);
       }
 
       const DATA = await RESPOSNE.json();
       console.log(DATA);
 
+      setFetchError(null);
+
       alert("Зарегистрировались");
     } catch (exception) {
-      console.error(exception);
+      if (exception instanceof Error) {
+        setFetchError(`${exception.message}`);
+        return;
+      }
+      setFetchError(`${exception}`);
     } finally {
       setIsFetch(false);
     }
@@ -81,6 +96,13 @@ export default function SignUpPage() {
             Введите свои данные
           </p>
         </div>
+        {fetchError ? (
+          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+            {fetchError}
+          </div>
+        ) : (
+          ""
+        )}
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="email"
