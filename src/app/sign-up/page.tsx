@@ -4,6 +4,7 @@ import { getFormSchema } from "@/form-schemas/useFormSchema";
 import ReactHookFormError from "@/shared/components/ReactHookFormError";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
+import { useState } from "react";
 import { Controller, Resolver, useForm } from "react-hook-form";
 
 interface IReactHookFormData {
@@ -12,6 +13,8 @@ interface IReactHookFormData {
 }
 
 export default function SignUpPage() {
+  const [isFetch, setIsFetch] = useState<boolean>(false);
+
   const LABEL_CLASS_NAME =
     "block text-sm font-medium text-slate-700 dark:text-slate-300";
 
@@ -42,21 +45,29 @@ export default function SignUpPage() {
     };
 
     const URI = "/api/authentication/register";
-    const RESPOSNE = await fetch(URI, {
-      method: "POST",
-      body: JSON.stringify(FORM_DATA),
-    });
 
-    const HTTP_STATUS = RESPOSNE.status;
-    if (HTTP_STATUS !== 201) {
-      const TEXT = await RESPOSNE.text();
-      throw Error(`HTTP ${HTTP_STATUS}\n${TEXT}`);
+    try {
+      setIsFetch(true);
+      const RESPOSNE = await fetch(URI, {
+        method: "POST",
+        body: JSON.stringify(FORM_DATA),
+      });
+
+      const HTTP_STATUS = RESPOSNE.status;
+      if (HTTP_STATUS !== 201) {
+        const TEXT = await RESPOSNE.text();
+        throw Error(`HTTP ${HTTP_STATUS}\n${TEXT}`);
+      }
+
+      const DATA = await RESPOSNE.json();
+      console.log(DATA);
+
+      alert("Зарегистрировались");
+    } catch (exception) {
+      console.error(exception);
+    } finally {
+      setIsFetch(false);
     }
-
-    const DATA = await RESPOSNE.json();
-    console.log(DATA);
-
-    alert("Зарегистрировались");
   }
 
   return (
@@ -124,10 +135,10 @@ export default function SignUpPage() {
 
           <button
             type="submit"
-            className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-medium hover:bg-blue-500"
-            disabled={!isValid}
+            className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
+            disabled={!isValid || isFetch}
           >
-            Зарегистрироваться
+            {isFetch ? "Отправка формы" : "Зарегистрироваться"}
           </button>
         </form>
         <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
