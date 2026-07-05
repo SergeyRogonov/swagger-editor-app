@@ -36,10 +36,27 @@ export default function SignInPage() {
   async function onSubmit(data: IReactHookFormData) {
     console.log("reactHookFormSubmit", data);
 
-    const DATA: IReactHookFormData = {
+    const FORM_DATA: IReactHookFormData = {
       email: data.email,
       password: data.password,
     };
+
+    const URI = "/api/authentication/login";
+    const RESPOSNE = await fetch(URI, {
+      method: "POST",
+      body: JSON.stringify(FORM_DATA),
+    });
+
+    const HTTP_STATUS = RESPOSNE.status;
+    if (HTTP_STATUS !== 200) {
+      const TEXT = await RESPOSNE.text();
+      throw Error(`HTTP ${HTTP_STATUS}\n${TEXT}`);
+    }
+
+    const DATA = await RESPOSNE.json();
+    console.log(DATA);
+
+    alert("Вы вошли");
   }
 
   return (
