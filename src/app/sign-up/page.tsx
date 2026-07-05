@@ -2,6 +2,7 @@
 
 import { getFormSchema } from "@/form-schemas/useFormSchema";
 import ReactHookFormError from "@/shared/components/ReactHookFormError";
+import FormErrorMessage from "@/shared/components/SignForm/FormErrorMessage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useState } from "react";
@@ -96,13 +97,7 @@ export default function SignUpPage() {
             Введите свои данные
           </p>
         </div>
-        {fetchError ? (
-          <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
-            {fetchError}
-          </div>
-        ) : (
-          ""
-        )}
+        <FormErrorMessage message={fetchError} />
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="email"
