@@ -1,0 +1,43 @@
+# Устанавливаю библиотеку для работы JSON Web Token
+
+npm install jose
+
+# Устанавливаю библиотеку для отправки почты
+
+npm install nodemailer
+npm install --save-dev @types/nodemailer
+
+# Устанавливаю Supabase
+
+npm install @supabase/ssr
+npm install @supabase/supabase-js
+
+npx supabase login
+npx supabase link --project-ref jefpdlgqetdhgyuytvch
+
+npx supabase migration list
+npx supabase migration new users
+npx supabase migration list
+
+npx supabase migration list
+npx supabase db push
+npx supabase migration list
+
+npx supabase migration list
+npx supabase migration new accessToken
+npx supabase migration list
+
+npx supabase migration list
+npx supabase db push
+npx supabase migration list
+
+# Устанавливаю библиотеку для генерации хэша пароля
+
+npm install bcrypt
+npm install --save-dev @types/bcrypt
+
+# Устанавливаю библиотеку для работы с формой
+
+npm install react-hook-form
+npm install yup
+npm install @hookform/resolvers
