@@ -18,6 +18,7 @@ const passwordValidation = yup
   .test({
     message: "1 special character",
     test: (value) => /[^A-Za-z0-9А-Яа-я]/.test(value),
-  });
+  })
+  .min(8, "Minimum 8 characters");
 
 export default passwordValidation;
