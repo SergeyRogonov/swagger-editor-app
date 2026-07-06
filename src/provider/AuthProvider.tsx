@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
   ReactNode,
+  useCallback,
 } from "react";
 
 interface AuthContextType {
@@ -20,9 +21,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  async function checkAuth() {
+  const checkAuth = useCallback(async () => {
     try {
-      setIsLoading(true);
       const RESPONSE = await fetch("/api/authentication/is-auth", {
         method: "POST",
       });
@@ -32,11 +32,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   return (
     <AuthContext.Provider value={{ isAuth, isLoading, checkAuth }}>
