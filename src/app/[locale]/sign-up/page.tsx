@@ -4,6 +4,7 @@ import { getFormSchema } from "@/form-schemas/useFormSchema";
 import ReactHookFormError from "@/shared/components/ReactHookFormError";
 import FormErrorMessage from "@/shared/components/SignForm/FormErrorMessage";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 import { Controller, Resolver, useForm } from "react-hook-form";
@@ -14,6 +15,8 @@ interface IReactHookFormData {
 }
 
 export default function SignUpPage() {
+  const t = useTranslations("sign-up");
+
   const [isFetch, setIsFetch] = useState<boolean>(false);
   const [fetchError, setFetchError] = useState<null | string>(null);
 
@@ -91,10 +94,10 @@ export default function SignUpPage() {
       <div className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-            Регистрация
+            {t("title")}
           </h1>
           <p className="mt-2 text-slate-500 dark:text-slate-400">
-            Введите свои данные
+            {t("subTitle")}
           </p>
         </div>
         <FormErrorMessage message={fetchError} />
