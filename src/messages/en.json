@@ -1,0 +1,40 @@
+{
+  "about": {
+    "pageTitle": "About the Project",
+    "overviewDescription": "This application is a Swagger/OpenAPI UI that allows users to load, edit and validate OpenAPI specifications, inspect API endpoints and interact with REST services through an intuitive interface. The project was developed as the final team assignment for the RS School React course.",
+    "courseDescription": "RS School is a free community-driven educational program that teaches modern web development through practical tasks and team collaboration. The React course focuses on building production-ready applications using modern technologies and best practices.",
+    "courseLinkText": "Learn more about the RS School React course",
+    "team": {
+      "title": "Development Team",
+      "members": {
+        "pavelhalanin": {
+          "name": "Pavel Galanin",
+          "role": "Navigation & Header, Authentication"
+        },
+        "SergeyRogonov": {
+          "name": "Sergey Rogonov",
+          "role": "Team Lead, Swagger Editor, API Viewer, About Page"
+        }
+      }
+    },
+    "technologiesLabel": "Technologies",
+    "resourcesLabel": "Resources"
+  },
+
+  "editor": {
+    "toolbar": {
+      "clear": "Clear Editor",
+      "load": "Load File"
+    },
+    "formatToggle": {
+      "toJson": "Convert to JSON",
+      "toYaml": "Convert to YAML"
+    },
+    "save": {
+      "button": "Save Schema"
+    },
+    "validation": {
+      "title": "Validation failed"
+    }
+  }
+}
