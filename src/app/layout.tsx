@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import HeadFavicon from "@/features/favicon/HeadFavicon";
 
 export const metadata: Metadata = {
   title: "Swagger/OpenAPI UI",
@@ -13,6 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <HeadFavicon />
       <body className="min-h-screen bg-slate-950 text-slate-100">
         {children}
       </body>
