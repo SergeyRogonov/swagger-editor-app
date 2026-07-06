@@ -5,19 +5,19 @@ const passwordValidation = yup
   .required()
   .test({
     message: "1 number",
-    test: (value) => /\d/.test(value),
+    test: (value) => /\p{Nd}/u.test(value),
   })
   .test({
     message: "1 uppercase",
-    test: (value) => /[A-ZА-Я]/.test(value),
+    test: (value) => /\p{Lu}/u.test(value),
   })
   .test({
     message: "1 lowercase",
-    test: (value) => /[a-zа-я]/.test(value),
+    test: (value) => /\p{Ll}/u.test(value),
   })
   .test({
     message: "1 special character",
-    test: (value) => /[^A-Za-z0-9А-Яа-я]/.test(value),
+    test: (value) => /[^\p{L}\p{Nd}]/u.test(value),
   })
   .min(8, "Minimum 8 characters");
 
