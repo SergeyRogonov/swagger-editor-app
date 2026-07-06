@@ -73,13 +73,13 @@ export default function SignUpPage() {
           message = DATA.message;
         } catch (exception) {
           const TEXT = await RESPOSNE.text();
-          message = TEXT;
+          message = `${TEXT}\n${exception}`;
         }
 
         throw Error(`${message}`);
       }
 
-      const DATA = await RESPOSNE.json();
+      await RESPOSNE.json();
 
       setFetchError(null);
 
