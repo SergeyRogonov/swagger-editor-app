@@ -51,8 +51,6 @@ export default function SignInPage() {
   });
 
   async function onSubmit(data: IReactHookFormData) {
-    console.log("reactHookFormSubmit", data);
-
     const FORM_DATA: IReactHookFormData = {
       email: data.email,
       password: data.password,
@@ -81,7 +79,6 @@ export default function SignInPage() {
       }
 
       const DATA = await RESPOSNE.json();
-      console.log(DATA);
 
       setFetchError(null);
 
