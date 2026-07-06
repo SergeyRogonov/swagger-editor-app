@@ -36,5 +36,10 @@
     "validation": {
       "title": "Validation failed"
     }
+  },
+
+  "sign-in": {
+    "title": "Log in to your account",
+    "subTitle": "Enter your login details"
   }
 }
