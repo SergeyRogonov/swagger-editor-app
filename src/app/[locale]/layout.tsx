@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/shared/components/Header";
 import { Footer } from "@/shared/components/Footer";
 import { routing } from "@/i18n/routing";
+import { AuthProvider } from "@/provider/AuthProvider";
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
@@ -33,13 +34,15 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <div className="flex h-screen flex-col">
-        <Header />
+      <AuthProvider>
+        <div className="flex h-screen flex-col">
+          <Header />
 
-        <main className="min-h-0 flex-1 overflow-hidden">{children}</main>
+          <main className="min-h-0 flex-1 overflow-hidden">{children}</main>
 
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </AuthProvider>
     </NextIntlClientProvider>
   );
 }

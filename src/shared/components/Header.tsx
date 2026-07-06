@@ -1,7 +1,14 @@
+"use client";
+
+import { useAuth } from "@/provider/AuthProvider";
 import Link from "next/link";
 
 export function Header() {
-  const isAuthenticated = false;
+  const { isAuth, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Проверка авторизации</div>;
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
@@ -16,7 +23,7 @@ export function Header() {
           >
             About
           </Link>
-          {isAuthenticated ? (
+          {isAuth ? (
             <>
               <Link
                 href="/history"
@@ -24,12 +31,12 @@ export function Header() {
               >
                 History
               </Link>
-              <button
-                type="button"
+              <Link
+                href="/sign-out"
                 className="rounded-md bg-red-600 px-3 py-2 text-sm font-medium hover:bg-red-500"
               >
                 Sign Out
-              </button>
+              </Link>
             </>
           ) : (
             <>

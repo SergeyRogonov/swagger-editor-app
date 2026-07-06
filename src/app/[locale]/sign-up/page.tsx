@@ -1,12 +1,14 @@
 "use client";
 
 import { getFormSchema } from "@/form-schemas/useFormSchema";
+import { useAuth } from "@/provider/AuthProvider";
 import ReactHookFormError from "@/shared/components/ReactHookFormError";
 import FormErrorMessage from "@/shared/components/SignForm/FormErrorMessage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Controller, Resolver, useForm } from "react-hook-form";
 
 interface IReactHookFormData {
@@ -15,6 +17,13 @@ interface IReactHookFormData {
 }
 
 export default function SignUpPage() {
+  const { isAuth, isLoading, checkAuth } = useAuth();
+  const route = useRouter();
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   const t = useTranslations("sign-up");
 
   const [isFetch, setIsFetch] = useState<boolean>(false);
@@ -77,7 +86,7 @@ export default function SignUpPage() {
 
       setFetchError(null);
 
-      alert("Зарегистрировались");
+      checkAuth();
     } catch (exception) {
       if (exception instanceof Error) {
         setFetchError(`${exception.message}`);
@@ -87,6 +96,16 @@ export default function SignUpPage() {
     } finally {
       setIsFetch(false);
     }
+  }
+
+  useEffect(() => {
+    if (!isLoading && isAuth) {
+      route.push("/");
+    }
+  }, [isAuth, isLoading, route]);
+
+  if (isLoading) {
+    return null;
   }
 
   return (
