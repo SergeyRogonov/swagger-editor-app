@@ -22,7 +22,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   const t = useTranslations("sign-in");
 

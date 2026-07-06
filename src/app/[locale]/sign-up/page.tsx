@@ -22,7 +22,7 @@ export default function SignUpPage() {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   const t = useTranslations("sign-up");
 
