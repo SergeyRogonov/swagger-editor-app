@@ -15,6 +15,7 @@ export default function HomePage() {
   const {
     rawText,
     schema,
+    derefSchema,
     format,
     displayFormat,
     setDisplayFormat,
@@ -40,7 +41,7 @@ export default function HomePage() {
         : ev.clientY - rect.top;
 
       const minPx = 260;
-      const maxPx = rect.width - 260;
+      const maxPx = isLandscape ? rect.width - 260 : rect.height - 260;
 
       const clampedPosition = clamp(position, minPx, maxPx);
       const totalSize = isLandscape ? rect.width : rect.height;
@@ -115,12 +116,10 @@ export default function HomePage() {
             aria-label="Resize editor and viewer"
           />
 
-          <div className="min-h-0 flex-1 overflow-hidden">
-            <div className="flex h-full flex-col min-h-0">
+          <div className="flex-1 overflow-y-scroll bg-slate-900">
+            <div className="flex min-h-full flex-col">
               <ValidationPanel errors={errors} />
-              <div className="min-h-0 flex-1 overflow-hidden">
-                <SwaggerViewer schema={schema} />
-              </div>
+              <SwaggerViewer schema={derefSchema} />
             </div>
           </div>
         </div>
