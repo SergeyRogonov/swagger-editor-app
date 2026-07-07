@@ -11,6 +11,7 @@ export interface SwaggerEditorState {
   rawText: string;
   format: SchemaFormat | null;
   schema: OpenAPIV3.Document | null;
+  derefSchema: OpenAPIV3.Document | null;
   isValid: boolean;
   errors: ValidationError[];
 }
