@@ -22,7 +22,7 @@ export default function SignInPage() {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   const t = useTranslations("sign-in");
 
@@ -51,8 +51,6 @@ export default function SignInPage() {
   });
 
   async function onSubmit(data: IReactHookFormData) {
-    console.log("reactHookFormSubmit", data);
-
     const FORM_DATA: IReactHookFormData = {
       email: data.email,
       password: data.password,
@@ -74,14 +72,13 @@ export default function SignInPage() {
           message = DATA.message;
         } catch (exception) {
           const TEXT = await RESPOSNE.text();
-          message = TEXT;
+          message = `${TEXT}\n${exception}`;
         }
 
         throw Error(`${message}`);
       }
 
-      const DATA = await RESPOSNE.json();
-      console.log(DATA);
+      await RESPOSNE.json();
 
       setFetchError(null);
 

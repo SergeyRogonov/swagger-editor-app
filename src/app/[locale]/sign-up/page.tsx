@@ -22,7 +22,7 @@ export default function SignUpPage() {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   const t = useTranslations("sign-up");
 
@@ -51,8 +51,6 @@ export default function SignUpPage() {
   });
 
   async function onSubmit(data: IReactHookFormData) {
-    console.log("reactHookFormSubmit", data);
-
     const FORM_DATA: IReactHookFormData = {
       email: data.email,
       password: data.password,
@@ -75,14 +73,13 @@ export default function SignUpPage() {
           message = DATA.message;
         } catch (exception) {
           const TEXT = await RESPOSNE.text();
-          message = TEXT;
+          message = `${TEXT}\n${exception}`;
         }
 
         throw Error(`${message}`);
       }
 
-      const DATA = await RESPOSNE.json();
-      console.log(DATA);
+      await RESPOSNE.json();
 
       setFetchError(null);
 

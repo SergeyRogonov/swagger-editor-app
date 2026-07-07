@@ -15,13 +15,13 @@ export default function SignUpPage() {
       });
       checkAuth();
     })();
-  }, []);
+  }, [checkAuth]);
 
   useEffect(() => {
     if (!isAuth) {
       route.push("/");
     }
-  }, [isAuth]);
+  }, [isAuth, route]);
 
   return null;
 }
