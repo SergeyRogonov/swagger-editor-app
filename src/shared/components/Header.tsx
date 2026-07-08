@@ -23,6 +23,7 @@ export function Header() {
           {t("appName")}
         </Link>
         <nav className="flex items-center gap-4">
+          <LanguageSwitcher />
           <Link
             href={`/${locale}/about`}
             className="text-sm text-slate-300 hover:text-white"
