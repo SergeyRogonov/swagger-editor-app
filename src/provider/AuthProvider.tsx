@@ -1,5 +1,6 @@
 "use client";
 
+import AsyncSleep from "@/utils/sleep/sleep";
 import {
   createContext,
   useContext,
@@ -26,6 +27,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const RESPONSE = await fetch("/api/authentication/is-auth", {
           method: "POST",
         });
+
+        await AsyncSleep(200);
 
         setIsAuth(RESPONSE.status === 200);
       } catch {

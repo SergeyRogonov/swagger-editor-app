@@ -1,12 +1,15 @@
 {
   "header": {
-    "authCheck": "Auth is checking",
     "appName": "Swagger Editor App",
     "about": "About",
     "history": "History",
     "signOut": "Sign out",
     "signIn": "Sign in",
     "signUp": "Sign up"
+  },
+
+  "auth-spinner": {
+    "authCheck": "Auth is checking"
   },
 
   "about": {

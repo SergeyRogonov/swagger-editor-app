@@ -1,12 +1,15 @@
 {
   "header": {
-    "authCheck": "Проверка авторизации",
     "appName": "Редактор Swagger",
     "about": "О проекте",
     "history": "История",
     "signOut": "Выйти",
     "signIn": "Войти",
     "signUp": "Регистрация"
+  },
+
+  "auth-spinner": {
+    "authCheck": "Проверка авторизации"
   },
 
   "about": {

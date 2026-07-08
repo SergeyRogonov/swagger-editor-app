@@ -4,6 +4,7 @@ import { useAuth } from "@/provider/AuthProvider";
 import Link from "next/link";
 import LanguageSwitcher from "./LangSwitcher";
 import { useLocale, useTranslations } from "next-intl";
+import AuthSpinner from "./AuthSpinner";
 
 export function Header() {
   const { isAuth, isLoading } = useAuth();
@@ -12,7 +13,7 @@ export function Header() {
   const t = useTranslations("header");
 
   if (isLoading) {
-    return <div>{t("authCheck")}</div>;
+    return <AuthSpinner />;
   }
 
   return (
