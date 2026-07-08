@@ -23,7 +23,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkAuthOnMount = async () => {
       try {
-        console.log("/api/authentication/is-auth");
         const RESPONSE = await fetch("/api/authentication/is-auth", {
           method: "POST",
         });
