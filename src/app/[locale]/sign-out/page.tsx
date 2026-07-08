@@ -4,24 +4,23 @@ import { useAuth } from "@/provider/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function SignUpPage() {
-  const { checkAuth, isAuth } = useAuth();
+export default function SignOutPage() {
+  const { isAuth } = useAuth();
   const route = useRouter();
 
   useEffect(() => {
     (async function () {
-      await fetch("/api/authentication/logout", {
-        method: "POST",
-      });
-      checkAuth();
-    })();
-  }, [checkAuth]);
+      if (isAuth) {
+        await fetch("/api/authentication/logout", {
+          method: "POST",
+        });
 
-  useEffect(() => {
-    if (!isAuth) {
-      route.push("/");
-    }
-  }, [isAuth, route]);
+        window.location.reload();
+      } else {
+        route.push("/");
+      }
+    })();
+  }, [route, isAuth]);
 
   return null;
 }

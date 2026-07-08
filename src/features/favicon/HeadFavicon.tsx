@@ -1,6 +1,8 @@
+import Head from "next/head";
+
 export default function HeadFavicon() {
   return (
-    <head>
+    <Head>
       <meta
         property="og:site_name"
         content="Swagger UI (Coffee-Driven Development)"
@@ -142,6 +144,6 @@ export default function HeadFavicon() {
       <meta name="msapplication-config" content="/favicon/ieconfig.xml" />
       <meta name="msapplication-TileColor" content="#2d89ef" />
       <meta name="msapplication-TileImage" content="/favicon/favicon_144.png" />
-    </head>
+    </Head>
   );
 }

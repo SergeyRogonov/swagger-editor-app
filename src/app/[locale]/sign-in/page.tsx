@@ -17,12 +17,8 @@ interface IReactHookFormData {
 }
 
 export default function SignInPage() {
-  const { isAuth, isLoading, checkAuth } = useAuth();
+  const { isAuth, isLoading } = useAuth();
   const route = useRouter();
-
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
 
   const t = useTranslations("sign-in");
 
@@ -81,8 +77,7 @@ export default function SignInPage() {
       await RESPOSNE.json();
 
       setFetchError(null);
-
-      checkAuth();
+      window.location.reload();
     } catch (exception) {
       if (exception instanceof Error) {
         setFetchError(`${exception.message}`);
@@ -125,7 +120,7 @@ export default function SignInPage() {
               return (
                 <div>
                   <label htmlFor={ID} className={LABEL_CLASS_NAME}>
-                    E-mail
+                    {t("emailTitle")}
                   </label>
                   <div className="mt-1 pt-1">
                     <input
@@ -150,13 +145,13 @@ export default function SignInPage() {
                 <div>
                   <div className="flex items-center justify-between">
                     <label htmlFor={ID} className={LABEL_CLASS_NAME}>
-                      Пароль
+                      {t("passwordTitle")}
                     </label>
                     <Link
                       href="/forgot-password"
                       className={`text-sm ${LINK_CLASS_NAME}`}
                     >
-                      Забыли пароль?
+                      {t("forgetPassword")}
                     </Link>
                   </div>
                   <div className="relative mt-1 pt-1">
@@ -179,13 +174,13 @@ export default function SignInPage() {
             className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
             disabled={!isValid || isFetch}
           >
-            {isFetch ? "Отправка формы" : "Войти"}
+            {isFetch ? t("sendingForm") : t("signIn")}
           </button>
         </form>
         <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
-          Нет аккаунта?{" "}
+          {t("noAccount")}{" "}
           <Link href="/sign-up" className={`font-mediumg ${LINK_CLASS_NAME}`}>
-            Зарегистрироваться
+            {t("signUp")}
           </Link>
         </p>
       </div>
