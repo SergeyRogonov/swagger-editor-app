@@ -1,4 +1,17 @@
 {
+  "header": {
+    "appName": "Swagger Editor App",
+    "about": "About",
+    "history": "History",
+    "signOut": "Sign out",
+    "signIn": "Sign in",
+    "signUp": "Sign up"
+  },
+
+  "auth-spinner": {
+    "authCheck": "Auth is checking"
+  },
+
   "about": {
     "pageTitle": "About the Project",
     "overviewDescription": "This application is a Swagger/OpenAPI UI that allows users to load, edit and validate OpenAPI specifications, inspect API endpoints and interact with REST services through an intuitive interface. The project was developed as the final team assignment for the RS School React course.",

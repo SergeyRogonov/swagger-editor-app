@@ -1,5 +1,6 @@
 "use client";
 
+import AsyncSleep from "@/utils/sleep/sleep";
 import {
   createContext,
   useContext,
@@ -22,10 +23,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const checkAuthOnMount = async () => {
       try {
-        console.log("/api/authentication/is-auth");
         const RESPONSE = await fetch("/api/authentication/is-auth", {
           method: "POST",
         });
+
+        await AsyncSleep(200);
 
         setIsAuth(RESPONSE.status === 200);
       } catch {
