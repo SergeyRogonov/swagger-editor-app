@@ -35,10 +35,10 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider messages={messages}>
       <AuthProvider>
-        <div className="flex h-screen flex-col">
+        <div className="flex h-screen min-h-0 flex-col">
           <Header />
 
-          <main className="min-h-0 flex-1 overflow-hidden">{children}</main>
+          <main className="min-h-0 flex-1 overflow-y-scroll">{children}</main>
 
           <Footer />
         </div>
