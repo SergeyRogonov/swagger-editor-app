@@ -40,12 +40,25 @@
 
   "sign-in": {
     "title": "Вход в аккаунт",
-    "subTitle": "Введите свои данные для входа"
+    "subTitle": "Введите свои данные для входа",
+    "emailTitle": "Электронная почта",
+    "passwordTitle": "Пароль",
+    "forgetPassword": "Забыли пароль?",
+    "sendingForm": "Отправка формы",
+    "signIn": "Войти",
+    "noAccount": "Нет аккаунта?",
+    "signUp": "Зарегистрироваться"
   },
 
   "sign-up": {
     "title": "Регистрация",
-    "subTitle": "Введите свои данные"
+    "subTitle": "Введите свои данные",
+    "emailTitle": "Электронная почта",
+    "passwordTitle": "Пароль",
+    "sendingForm": "Отправка формы",
+    "isHaveAccount": "Есть аккаунт?",
+    "signIn": "Войти",
+    "signUp": "Зарегистрироваться"
   },
 
   "history": {

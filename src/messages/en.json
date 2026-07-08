@@ -40,12 +40,25 @@
 
   "sign-in": {
     "title": "Log in to your account",
-    "subTitle": "Enter your login details"
+    "subTitle": "Enter your login details",
+    "emailTitle": "E-mail",
+    "passwordTitle": "Password",
+    "forgetPassword": "Forget password?",
+    "sendingForm": "Sending form",
+    "signIn": "Sign in",
+    "noAccount": "No account?",
+    "signUp": "Sing up"
   },
 
   "sign-up": {
     "title": "Registration",
-    "subTitle": "Enter your details"
+    "subTitle": "Enter your details",
+    "emailTitle": "E-mail",
+    "passwordTitle": "Password",
+    "sendingForm": "Sending form",
+    "isHaveAccount": "Are you have account?",
+    "signIn": "Sign in",
+    "signUp": "Sing up"
   },
 
   "history": {

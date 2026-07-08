@@ -121,7 +121,7 @@ export default function SignUpPage() {
               return (
                 <div>
                   <label htmlFor={ID} className={LABEL_CLASS_NAME}>
-                    E-mail
+                    {t("emailTitle")}
                   </label>
                   <div className="mt-1 pt-1">
                     <input
@@ -146,7 +146,7 @@ export default function SignUpPage() {
                 <div>
                   <div className="flex items-center justify-between">
                     <label htmlFor={ID} className={LABEL_CLASS_NAME}>
-                      Пароль
+                      {t("passwordTitle")}
                     </label>
                   </div>
                   <div className="relative mt-1 pt-1">
@@ -169,13 +169,13 @@ export default function SignUpPage() {
             className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
             disabled={!isValid || isFetch}
           >
-            {isFetch ? "Отправка формы" : "Зарегистрироваться"}
+            {isFetch ? t("sendingForm") : t("signUp")}
           </button>
         </form>
         <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
-          Есть аккаунт?{" "}
+          {t("isHaveAccount")}{" "}
           <Link href="/sign-in" className={`font-mediumg ${LINK_CLASS_NAME}`}>
-            Войти
+            {t("signIn")}
           </Link>
         </p>
       </div>
