@@ -17,12 +17,8 @@ interface IReactHookFormData {
 }
 
 export default function SignUpPage() {
-  const { isAuth, isLoading, checkAuth } = useAuth();
+  const { isAuth, isLoading } = useAuth();
   const route = useRouter();
-
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
 
   const t = useTranslations("sign-up");
 
@@ -82,8 +78,7 @@ export default function SignUpPage() {
       await RESPOSNE.json();
 
       setFetchError(null);
-
-      checkAuth();
+      window.location.reload();
     } catch (exception) {
       if (exception instanceof Error) {
         setFetchError(`${exception.message}`);

@@ -17,12 +17,8 @@ interface IReactHookFormData {
 }
 
 export default function SignInPage() {
-  const { isAuth, isLoading, checkAuth } = useAuth();
+  const { isAuth, isLoading } = useAuth();
   const route = useRouter();
-
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
 
   const t = useTranslations("sign-in");
 
@@ -81,8 +77,7 @@ export default function SignInPage() {
       await RESPOSNE.json();
 
       setFetchError(null);
-
-      checkAuth();
+      window.location.reload();
     } catch (exception) {
       if (exception instanceof Error) {
         setFetchError(`${exception.message}`);

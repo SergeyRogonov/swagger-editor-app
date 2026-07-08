@@ -6,14 +6,11 @@ import {
   useEffect,
   useState,
   ReactNode,
-  useCallback,
-  useRef,
 } from "react";
 
 interface AuthContextType {
   isAuth: boolean;
   isLoading: boolean;
-  checkAuth: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,56 +18,28 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const isMounted = useRef(true);
 
   useEffect(() => {
     const checkAuthOnMount = async () => {
       try {
+        console.log("/api/authentication/is-auth");
         const RESPONSE = await fetch("/api/authentication/is-auth", {
           method: "POST",
         });
-        if (isMounted.current) {
-          setIsAuth(RESPONSE.status === 200);
-        }
+
+        setIsAuth(RESPONSE.status === 200);
       } catch {
-        if (isMounted.current) {
-          setIsAuth(false);
-        }
+        setIsAuth(false);
       } finally {
-        if (isMounted.current) {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }
     };
 
     checkAuthOnMount();
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  const checkAuth = useCallback(async () => {
-    try {
-      const RESPONSE = await fetch("/api/authentication/is-auth", {
-        method: "POST",
-      });
-      if (isMounted.current) {
-        setIsAuth(RESPONSE.status === 200);
-      }
-    } catch {
-      if (isMounted.current) {
-        setIsAuth(false);
-      }
-    } finally {
-      if (isMounted.current) {
-        setIsLoading(false);
-      }
-    }
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuth, isLoading, checkAuth }}>
+    <AuthContext.Provider value={{ isAuth, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
