@@ -73,8 +73,30 @@
     "signIn": "Войти",
     "signUp": "Зарегистрироваться"
   },
-
   "history": {
-    "title": "История"
+    "title": "История и аналитика",
+    "empty": "Вы ещё не выполнили ни одного запроса.",
+    "editor": "Редактор",
+    "viewer": "Просмотрщик",
+    "goTo": "Перейдите в <editor>Редактор</editor>, чтобы выполнить свой первый запрос.",
+
+    "method": "Метод",
+    "status": "Статус",
+    "duration": "Длительность",
+    "timestamp": "Время",
+    "requestSize": "Размер запроса",
+    "responseSize": "Размер ответа",
+    "endpoint": "Эндпоинт",
+
+    "error": "Ошибка",
+    "requestBody": "Тело запроса",
+    "responseBody": "Тело ответа",
+    "responseHeaders": "Заголовки ответа",
+
+    "none": "—",
+    "requestSizeUnit": "{size} Б",
+    "responseSizeUnit": "{size} Б",
+    "durationUnit": "{duration} мс",
+    "requestHint": "Перейдите в {editor} или {viewer}, чтобы выполнить первый запрос."
   }
 }

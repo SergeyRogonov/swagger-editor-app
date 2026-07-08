@@ -73,8 +73,30 @@
     "signIn": "Sign in",
     "signUp": "Sing up"
   },
-
   "history": {
-    "title": "History"
+    "title": "History & Analytics",
+    "empty": "You haven't executed any requests yet.",
+    "editor": "Editor",
+    "viewer": "Viewer",
+    "goTo": "Go to the <editor>Editor</editor> to make your first request.",
+
+    "method": "Method",
+    "status": "Status",
+    "duration": "Duration",
+    "timestamp": "Timestamp",
+    "requestSize": "Request size",
+    "responseSize": "Response size",
+    "endpoint": "Endpoint",
+
+    "error": "Error",
+    "requestBody": "Request body",
+    "responseBody": "Response body",
+    "responseHeaders": "Response headers",
+
+    "none": "—",
+    "requestSizeUnit": "{size} B",
+    "responseSizeUnit": "{size} B",
+    "durationUnit": "{duration}ms",
+    "requestHint": "Go to the {editor} or {viewer} to make your first request."
   }
 }
