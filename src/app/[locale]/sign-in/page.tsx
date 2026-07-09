@@ -25,13 +25,12 @@ export default function SignInPage() {
   const [isFetch, setIsFetch] = useState<boolean>(false);
   const [fetchError, setFetchError] = useState<null | string>(null);
 
-  const LABEL_CLASS_NAME =
-    "block text-sm font-medium text-slate-700 dark:text-slate-300";
+  const LABEL_CLASS_NAME = "block text-sm font-medium text-text-secondary";
 
   const INPUT_CLASS_NAME =
-    "w-full rounded-lg border border-slate-300 px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-slate-400";
+    "w-full rounded-lg border border-overlay bg-elevated px-4 py-2.5 text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20";
 
-  const LINK_CLASS_NAME = "text-blue-600 hover:underline dark:text-blue-400";
+  const LINK_CLASS_NAME = "text-accent hover:underline";
 
   const {
     control,
@@ -101,14 +100,10 @@ export default function SignInPage() {
 
   return (
     <main className="mx-auto max-w-md px-6 py-12">
-      <div className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+      <div className="rounded-lg border border-overlay bg-elevated p-8 shadow-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-            {t("title")}
-          </h1>
-          <p className="mt-2 text-slate-500 dark:text-slate-400">
-            {t("subTitle")}
-          </p>
+          <h1 className="text-3xl font-bold text-text-primary">{t("title")}</h1>
+          <p className="mt-2 text-text-muted">{t("subTitle")}</p>
         </div>
         <FormErrorMessage message={fetchError} />
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
@@ -171,13 +166,13 @@ export default function SignInPage() {
 
           <button
             type="submit"
-            className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
+            className="w-full rounded-md bg-blue-600 text-white px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
             disabled={!isValid || isFetch}
           >
             {isFetch ? t("sendingForm") : t("signIn")}
           </button>
         </form>
-        <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
+        <p className="mt-6 text-center text-sm text-text-muted">
           {t("noAccount")}{" "}
           <Link href="/sign-up" className={`font-mediumg ${LINK_CLASS_NAME}`}>
             {t("signUp")}

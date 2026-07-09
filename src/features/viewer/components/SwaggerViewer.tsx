@@ -11,12 +11,12 @@ type SwaggerViewerProps = {
 export function SwaggerViewer({ schema }: SwaggerViewerProps) {
   if (!schema) {
     return (
-      <section className="min-h-full border border-slate-800 flex flex-col">
-        <div className="border-b border-slate-800 px-4 py-3">
+      <section className="min-h-full border border-overlay flex flex-col">
+        <div className="border-b border-overlay px-4 py-3">
           <h2 className="text-lg font-semibold">Swagger Viewer</h2>
         </div>
 
-        <div className="p-4 text-slate-500">
+        <div className="p-4 text-text-muted">
           Load a valid schema to see endpoints.
         </div>
       </section>
@@ -26,20 +26,20 @@ export function SwaggerViewer({ schema }: SwaggerViewerProps) {
   const { info, externalDocs, openapi } = schema;
 
   return (
-    <section className="border-slate-800 flex flex-col">
-      <div className="border-b border-slate-800 p-6 space-y-5 flex-none">
+    <section className="border-overlay flex flex-col">
+      <div className="border-b border-overlay p-6 space-y-5 flex-none">
         <div>
           <div className="flex items-center gap-3 flex-wrap">
             <h2 className="text-2xl font-bold">{info.title}</h2>
 
             {info.version && (
-              <span className="rounded bg-slate-800 px-2 py-1 text-xs text-slate-300">
+              <span className="rounded bg-elevated px-2 py-1 text-xs text-text-primary">
                 API v{info.version}
               </span>
             )}
 
             {openapi && (
-              <span className="rounded bg-blue-900/40 px-2 py-1 text-xs text-blue-300">
+              <span className="rounded bg-blue-500/20 px-2 py-1 text-xs text-blue-500">
                 OpenAPI {openapi}
               </span>
             )}
@@ -76,7 +76,7 @@ export function SwaggerViewer({ schema }: SwaggerViewerProps) {
         <div className="grid gap-3 text-sm sm:grid-cols-2">
           {info.termsOfService && (
             <div>
-              <div className="text-slate-400">Terms of Service</div>
+              <div className="text-text-secondary">Terms of Service</div>
               <a
                 href={info.termsOfService}
                 target="_blank"
@@ -90,7 +90,7 @@ export function SwaggerViewer({ schema }: SwaggerViewerProps) {
 
           {info.contact && (
             <div>
-              <div className="text-slate-400">Contact</div>
+              <div className="text-text-secondary">Contact</div>
 
               <div className="space-y-1">
                 {info.contact.name && <div>{info.contact.name}</div>}
@@ -122,7 +122,7 @@ export function SwaggerViewer({ schema }: SwaggerViewerProps) {
 
           {info.license && (
             <div>
-              <div className="text-slate-400">License</div>
+              <div className="text-text-secondary">License</div>
 
               {info.license.url ? (
                 <a
@@ -141,7 +141,7 @@ export function SwaggerViewer({ schema }: SwaggerViewerProps) {
 
           {externalDocs && (
             <div>
-              <div className="text-slate-400">
+              <div className="text-text-secondary">
                 {externalDocs.description ?? "External Documentation"}
               </div>
 

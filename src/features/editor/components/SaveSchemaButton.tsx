@@ -16,7 +16,7 @@ export function SaveSchemaButton({
       type="button"
       disabled={disabled}
       onClick={onSave}
-      className="rounded border border-slate-600 px-2 py-0.5 text-xs sm:px-3 sm:py-1 sm:text-sm text-slate-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+      className="rounded border border-overlay px-2 py-0.5 text-xs sm:px-3 sm:py-1 sm:text-sm text-text-primary hover:bg-elevated disabled:cursor-not-allowed disabled:opacity-50"
     >
       {t("button")}
     </button>

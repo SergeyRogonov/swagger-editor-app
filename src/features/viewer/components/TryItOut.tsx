@@ -150,25 +150,25 @@ export function TryItOut({
   };
 
   return (
-    <div className="border-t border-slate-700 mt-4 pt-4 space-y-4">
-      <h4 className="text-base font-semibold text-slate-100 border-l-2 border-blue-500 pl-2">
+    <div className="border-t border-overlay mt-4 pt-4 space-y-4">
+      <h4 className="border-l-2 border-blue-500 pl-2 font-semibold mb-2 text-text-primary">
         Try it out
       </h4>
 
       {showCurl && (
         <div>
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs uppercase text-slate-500 font-semibold">
+            <span className="text-xs uppercase text-text-muted font-semibold">
               cURL
             </span>
             <button
               onClick={copyCurl}
-              className="text-xs px-2 py-0.5 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded"
+              className="text-xs px-2 py-0.5 bg-elevated hover:bg-overlay text-text-primary rounded"
             >
               {copied ? "Copied!" : "Copy"}
             </button>
           </div>
-          <pre className="text-xs bg-slate-950 rounded p-2 overflow-auto text-slate-300 max-h-32">
+          <pre className="text-xs bg-base rounded p-2 overflow-auto text-text-primary max-h-32">
             {buildCurl()}
           </pre>
         </div>
@@ -177,13 +177,13 @@ export function TryItOut({
       {Object.entries(byLocation).map(([loc, params]) =>
         params.length === 0 ? null : (
           <div key={loc}>
-            <span className="text-xs uppercase text-slate-500 font-semibold">
+            <span className="text-xs uppercase text-text-muted font-semibold">
               {loc}
             </span>
             <div className="mt-1 space-y-2">
               {params.map((p) => (
                 <div key={p.name} className="flex items-center gap-2">
-                  <label className="text-xs font-mono text-slate-300 w-32 flex-none">
+                  <label className="text-xs font-mono text-text-primary w-32 flex-none">
                     {p.name}
                     {p.required && (
                       <span className="text-red-400 ml-0.5">*</span>
@@ -194,7 +194,7 @@ export function TryItOut({
                     placeholder={p.description ?? p.name}
                     value={paramValues[p.name] ?? ""}
                     onChange={(e) => setParam(p.name, e.target.value)}
-                    className="flex-1 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs text-slate-200 focus:outline-none focus:border-slate-500"
+                    className="flex-1 bg-base border border-overlay rounded px-2 py-1 text-xs text-text-primary focus:outline-none focus:border-text-muted"
                   />
                 </div>
               ))}
@@ -205,7 +205,7 @@ export function TryItOut({
 
       {requestBody && (
         <div>
-          <span className="text-xs uppercase text-slate-500 font-semibold">
+          <span className="text-xs uppercase text-text-muted font-semibold">
             body
             {requestBody.required && (
               <span className="text-red-400 ml-0.5">*</span>
@@ -216,7 +216,7 @@ export function TryItOut({
             placeholder='{"key": "value"}'
             value={bodyText}
             onChange={(e) => setBodyText(e.target.value)}
-            className="mt-1 w-full bg-slate-950 border border-slate-700 rounded px-2 py-1 text-xs font-mono text-slate-200 focus:outline-none focus:border-slate-500 resize-y"
+            className="mt-1 w-full bg-base border border-overlay rounded px-2 py-1 text-xs font-mono text-text-primary focus:outline-none focus:border-text-muted resize-y"
           />
         </div>
       )}
@@ -236,7 +236,7 @@ export function TryItOut({
             setError(null);
             setShowCurl(false);
           }}
-          className="px-4 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm rounded"
+          className="px-4 py-1.5 bg-elevated hover:bg-overlay text-text-primary text-sm rounded"
         >
           Clear
         </button>
@@ -261,17 +261,17 @@ export function TryItOut({
           </div>
 
           <details className="text-xs">
-            <summary className="text-slate-500 cursor-pointer">
+            <summary className="text-text-muted cursor-pointer">
               Response headers
             </summary>
-            <pre className="bg-slate-950 rounded p-2 mt-1 text-slate-400 overflow-auto max-h-32">
+            <pre className="bg-base rounded p-2 mt-1 text-text-secondary overflow-auto max-h-32">
               {JSON.stringify(result.headers, null, 2)}
             </pre>
           </details>
 
           <div>
-            <span className="text-xs text-slate-500">Response body</span>
-            <pre className="bg-slate-950 rounded p-2 mt-1 text-xs text-slate-300 overflow-auto max-h-60">
+            <span className="text-xs text-text-muted">Response body</span>
+            <pre className="bg-base rounded p-2 mt-1 text-xs text-text-primary overflow-auto max-h-60">
               {formatResponseBody(
                 result.body,
                 result.headers["content-type"] ?? acceptMime,

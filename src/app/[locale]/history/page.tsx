@@ -59,17 +59,17 @@ export default async function HistoryPage() {
       <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
 
       {records.length === 0 ? (
-        <div className="text-slate-400 space-y-3">
+        <div className="text-text-secondary space-y-3">
           <p>{t("empty")}</p>
           <p>
             {t.rich("goTo", {
               editor: (chunks) => (
-                <Link href="/" className="text-blue-400 hover:underline">
+                <Link href="/" className="text-accent hover:underline">
                   {chunks}
                 </Link>
               ),
               viewer: (chunks) => (
-                <Link href="/" className="text-blue-400 hover:underline">
+                <Link href="/" className="text-accent hover:underline">
                   {chunks}
                 </Link>
               ),
@@ -81,15 +81,15 @@ export default async function HistoryPage() {
           {records.map((r) => (
             <details
               key={r.id}
-              className="border border-slate-700 rounded overflow-hidden"
+              className="border border-overlay rounded overflow-hidden"
             >
-              <summary className="flex items-center gap-3 px-4 py-3 bg-slate-800 cursor-pointer hover:bg-slate-750">
+              <summary className="flex items-center gap-3 px-4 py-3 bg-elevated cursor-pointer hover:bg-surface">
                 <span
-                  className={`text-xs font-bold px-2 py-0.5 rounded text-white ${METHOD_COLORS[r.method] ?? "bg-slate-500"}`}
+                  className={`text-xs font-bold px-2 py-0.5 rounded text-white ${METHOD_COLORS[r.method] ?? "bg-text-muted"}`}
                 >
                   {r.method}
                 </span>
-                <span className="font-mono text-sm text-slate-100 flex-1 truncate">
+                <span className="font-mono text-sm text-text-primary flex-1 truncate">
                   {r.url}
                 </span>
                 <span
@@ -104,31 +104,31 @@ export default async function HistoryPage() {
                   {r.res_status || "ERR"}
                 </span>
                 {r.duration_ms != null && (
-                  <span className="text-slate-400 text-xs">
+                  <span className="text-text-secondary text-xs">
                     {t("durationUnit", { duration: r.duration_ms })}
                   </span>
                 )}
-                <span className="text-slate-500 text-xs">
+                <span className="text-text-muted text-xs">
                   {new Date(r.executed_at).toLocaleString()}
                 </span>
               </summary>
 
-              <div className="px-4 py-3 bg-slate-900 space-y-3 text-xs">
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 text-slate-400">
+              <div className="px-4 py-3 bg-surface space-y-3 text-xs">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 text-text-secondary">
                   <div>
-                    <span className="uppercase font-semibold text-slate-500">
+                    <span className="uppercase font-semibold text-text-muted">
                       {t("method")}
                     </span>
                     <p>{r.method}</p>
                   </div>
                   <div>
-                    <span className="uppercase font-semibold text-slate-500">
+                    <span className="uppercase font-semibold text-text-muted">
                       {t("status")}
                     </span>
                     <p>{r.res_status || t("none")}</p>
                   </div>
                   <div>
-                    <span className="uppercase font-semibold text-slate-500">
+                    <span className="uppercase font-semibold text-text-muted">
                       {t("duration")}
                     </span>
                     <p>
@@ -138,13 +138,13 @@ export default async function HistoryPage() {
                     </p>
                   </div>
                   <div>
-                    <span className="uppercase font-semibold text-slate-500">
+                    <span className="uppercase font-semibold text-text-muted">
                       {t("timestamp")}
                     </span>
                     <p>{new Date(r.executed_at).toLocaleString()}</p>
                   </div>
                   <div>
-                    <span className="uppercase font-semibold text-slate-500">
+                    <span className="uppercase font-semibold text-text-muted">
                       {t("requestSize")}
                     </span>
                     <p>
@@ -154,7 +154,7 @@ export default async function HistoryPage() {
                     </p>
                   </div>
                   <div>
-                    <span className="uppercase font-semibold text-slate-500">
+                    <span className="uppercase font-semibold text-text-muted">
                       {t("responseSize")}
                     </span>
                     <p>
@@ -164,7 +164,7 @@ export default async function HistoryPage() {
                     </p>
                   </div>
                   <div className="col-span-2">
-                    <span className="uppercase font-semibold text-slate-500">
+                    <span className="uppercase font-semibold text-text-muted">
                       {t("endpoint")}
                     </span>
                     <p className="font-mono truncate">{r.url}</p>
@@ -176,7 +176,7 @@ export default async function HistoryPage() {
                     <span className="text-red-400 uppercase font-semibold">
                       {t("error")}
                     </span>
-                    <pre className="mt-1 bg-slate-950 rounded p-2 text-red-300 overflow-auto max-h-24">
+                    <pre className="mt-1 bg-base rounded p-2 text-red-300 overflow-auto max-h-24">
                       {r.error_details}
                     </pre>
                   </div>
@@ -184,20 +184,20 @@ export default async function HistoryPage() {
 
                 {r.req_body && (
                   <div>
-                    <span className="text-slate-500 uppercase font-semibold">
+                    <span className="text-text-muted uppercase font-semibold">
                       {t("requestBody")}
                     </span>
-                    <pre className="mt-1 bg-slate-950 rounded p-2 text-slate-300 overflow-auto max-h-32">
+                    <pre className="mt-1 bg-base rounded p-2 text-text-primary overflow-auto max-h-32">
                       {r.req_body}
                     </pre>
                   </div>
                 )}
 
                 <div>
-                  <span className="text-slate-500 uppercase font-semibold">
+                  <span className="text-text-muted uppercase font-semibold">
                     {t("responseBody")}
                   </span>
-                  <pre className="mt-1 bg-slate-950 rounded p-2 text-slate-300 overflow-auto max-h-40">
+                  <pre className="mt-1 bg-base rounded p-2 text-text-primary overflow-auto max-h-40">
                     {r.res_body
                       ? (() => {
                           try {
@@ -215,10 +215,10 @@ export default async function HistoryPage() {
                 </div>
 
                 <details>
-                  <summary className="text-slate-500 cursor-pointer">
+                  <summary className="text-text-muted cursor-pointer">
                     {t("responseHeaders")}
                   </summary>
-                  <pre className="mt-1 bg-slate-950 rounded p-2 text-slate-400 overflow-auto max-h-32">
+                  <pre className="mt-1 bg-base rounded p-2 text-text-secondary overflow-auto max-h-32">
                     {JSON.stringify(r.res_headers, null, 2)}
                   </pre>
                 </details>

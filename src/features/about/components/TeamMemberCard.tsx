@@ -12,15 +12,15 @@ export default function TeamMemberCard({
   githubUsername,
 }: TeamMemberCardProps) {
   return (
-    <article className="flex flex-col rounded-xl border border-slate-700 bg-slate-900 p-6 shadow-sm">
+    <article className="flex flex-col rounded-xl border border-overlay bg-surface p-6 shadow-sm">
       <div className="mb-4 flex items-center gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-white">{name}</h3>
-          <p className="text-sm text-slate-400">{role}</p>
+          <h3 className="text-lg font-semibold text-text-primary">{name}</h3>
+          <p className="text-sm text-text-secondary">{role}</p>
         </div>
       </div>
 
-      <div className="mt-auto">
+      <div className="mt-auto text-text-secondary">
         GitHub:{" "}
         <a
           href={github}

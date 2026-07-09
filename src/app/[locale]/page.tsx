@@ -116,7 +116,7 @@ export default function HomePage() {
             aria-label="Resize editor and viewer"
           />
 
-          <div className="flex-1 overflow-y-scroll bg-slate-900">
+          <div className="flex-1 overflow-y-scroll bg-surface">
             <div className="flex min-h-full flex-col">
               <ValidationPanel errors={errors} />
               <SwaggerViewer schema={derefSchema} />
