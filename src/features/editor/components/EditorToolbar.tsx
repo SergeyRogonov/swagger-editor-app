@@ -48,7 +48,7 @@ export function EditorToolbar({
       <button
         type="button"
         onClick={() => onChange("")}
-        className="rounded border border-slate-600 px-2 py-0.5 text-xs sm:px-3 sm:py-1 sm:text-sm text-slate-200 hover:bg-slate-800"
+        className="rounded border border-overlay px-2 py-0.5 text-xs sm:px-3 sm:py-1 sm:text-sm text-text-primary hover:bg-elevated"
       >
         {t("clear")}
       </button>
@@ -56,7 +56,7 @@ export function EditorToolbar({
       <button
         type="button"
         onClick={() => fileInputRef.current?.click()}
-        className="rounded border border-slate-600 px-2 py-0.5 text-xs sm:px-3 sm:py-1 sm:text-sm text-slate-200 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded border border-overlay px-2 py-0.5 text-xs sm:px-3 sm:py-1 sm:text-sm text-text-primary hover:bg-elevated disabled:cursor-not-allowed disabled:opacity-50"
       >
         {t("load")}
       </button>

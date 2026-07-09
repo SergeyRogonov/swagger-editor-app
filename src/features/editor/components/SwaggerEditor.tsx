@@ -2,11 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { EditorToolbar } from "@/features/editor/components/EditorToolbar";
+import { useTheme } from "@/provider/ThemeProvider";
 import type { SchemaFormat } from "@/types/swagger";
 
-const Editor = dynamic(() => import("@monaco-editor/react"), {
-  ssr: false,
-});
+const Editor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 
 interface SwaggerEditorProps {
   value: string;
@@ -27,6 +26,8 @@ export function SwaggerEditor({
   onFormatToggle,
   onSaveSchema,
 }: SwaggerEditorProps) {
+  const { theme } = useTheme();
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2 p-2">
@@ -45,13 +46,11 @@ export function SwaggerEditor({
           defaultLanguage={language}
           language={language}
           value={value}
-          theme="vs-dark"
+          theme={theme === "dark" ? "vs-dark" : "light"}
           onChange={(value) => onChange(value ?? "")}
           options={{
             automaticLayout: true,
-            minimap: {
-              enabled: false,
-            },
+            minimap: { enabled: false },
             fontSize: 14,
             wordWrap: "on",
             scrollBeyondLastLine: false,

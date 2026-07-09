@@ -35,22 +35,22 @@ function TagGroup({
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="border border-slate-700 rounded overflow-hidden">
+    <div className="border border-overlay rounded overflow-hidden">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800 hover:bg-slate-750 text-left"
+        className="w-full flex items-center gap-3 px-4 py-3 bg-elevated hover:bg-overlay text-left"
       >
-        <span className="font-semibold text-slate-100 flex-1">{tag}</span>
+        <span className="font-semibold text-text-primary flex-1">{tag}</span>
         {description && (
-          <span className="text-slate-500 text-xs hidden sm:block">
+          <span className="text-text-muted text-xs hidden sm:block">
             {description}
           </span>
         )}
-        <span className="text-slate-500 text-xs">{open ? "▲" : "▼"}</span>
+        <span className="text-text-muted text-xs">{open ? "▲" : "▼"}</span>
       </button>
 
       {open && (
-        <div className="p-2 space-y-2 bg-slate-900">
+        <div className="p-2 space-y-2 bg-surface">
           {endpoints.map(({ method, path, operation }) => (
             <EndpointItem
               key={`${method}-${path}`}
@@ -70,7 +70,7 @@ export function EndpointList({ schema }: Props) {
   const paths = schema.paths ?? {};
 
   if (Object.keys(paths).length === 0) {
-    return <p className="text-slate-500 p-4">No endpoints defined.</p>;
+    return <p className="text-text-muted p-4">No endpoints defined.</p>;
   }
 
   const baseUrl = schema.servers?.[0]?.url ?? "";

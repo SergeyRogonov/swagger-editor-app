@@ -110,7 +110,7 @@ function MediaContent({
           <select
             value={selectedMime}
             onChange={(e) => onMimeChange(e.target.value)}
-            className="bg-slate-800 border border-slate-700 rounded px-2 py-0.5 text-xs text-slate-300 focus:outline-none focus:border-slate-500"
+            className="bg-elevated border border-overlay rounded px-2 py-0.5 text-xs text-text-primary focus:outline-none focus:border-slate-500"
           >
             {mimeTypes.map((mime) => (
               <option key={mime} value={mime}>
@@ -119,26 +119,26 @@ function MediaContent({
             ))}
           </select>
         ) : (
-          <span className="text-xs text-slate-500">{selectedMime}</span>
+          <span className="text-xs text-text-muted">{selectedMime}</span>
         )}
 
         <div className="flex border border-slate-700 rounded overflow-hidden text-xs">
           <button
             onClick={() => setTab("schema")}
-            className={`px-2 py-0.5 ${tab === "schema" ? "bg-slate-600 text-slate-100" : "bg-slate-800 text-slate-400 hover:bg-slate-700"}`}
+            className={`px-2 py-0.5 ${tab === "schema" ? "bg-overlay text-text-primary" : "bg-elevated text-text-secondary hover:bg-overlay"}`}
           >
             Schema
           </button>
           <button
             onClick={() => setTab("example")}
-            className={`px-2 py-0.5 ${tab === "example" ? "bg-slate-600 text-slate-100" : "bg-slate-800 text-slate-400 hover:bg-slate-700"}`}
+            className={`px-2 py-0.5 ${tab === "example" ? "bg-overlay text-text-primary" : "bg-elevated text-text-secondary hover:bg-overlay"}`}
           >
             Example
           </button>
         </div>
       </div>
 
-      <pre className="text-xs bg-slate-950 rounded p-2 overflow-auto text-slate-300 max-h-40">
+      <pre className="text-xs bg-base rounded p-2 overflow-auto text-text-primary max-h-40">
         {tab === "schema"
           ? JSON.stringify(schema, null, 2)
           : formatExample(exampleValue, selectedMime, schema)}
@@ -175,7 +175,9 @@ function ResponseItem({
         >
           {status}
         </span>
-        <span className="text-slate-400 text-xs">{response.description}</span>
+        <span className="text-text-secondary text-xs">
+          {response.description}
+        </span>
       </div>
       {response.content && (
         <MediaContent
@@ -218,26 +220,28 @@ export function EndpointItem({ method, path, baseUrl, operation }: Props) {
     <div className="border border-slate-700 rounded overflow-hidden">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center gap-3 px-4 py-3 bg-slate-800 hover:bg-slate-750 text-left"
+        className="w-full flex items-center gap-3 px-4 py-3 bg-elevated hover:bg-overlay text-left"
       >
         <span
           className={`${METHOD_COLORS[method] ?? "bg-slate-600"} text-white text-xs font-bold uppercase px-2 py-0.5 rounded w-16 text-center flex-none`}
         >
           {method}
         </span>
-        <span className="font-mono text-sm text-slate-100 flex-1">{path}</span>
+        <span className="font-mono text-sm text-text-primary flex-1">
+          {path}
+        </span>
         {operation.summary && (
-          <span className="text-slate-400 text-sm hidden sm:block">
+          <span className="text-text-secondary text-sm hidden sm:block">
             {operation.summary}
           </span>
         )}
-        <span className="text-slate-500 text-xs ml-2">{open ? "▲" : "▼"}</span>
+        <span className="text-text-muted text-xs ml-2">{open ? "▲" : "▼"}</span>
       </button>
 
       {open && (
-        <div className="px-4 py-4 bg-slate-900 space-y-4 text-sm">
+        <div className="px-4 py-4 bg-surface space-y-4 text-sm">
           {operation.description && (
-            <p className="text-slate-400">{operation.description}</p>
+            <p className="text-text-secondary">{operation.description}</p>
           )}
 
           <TryItOut
@@ -254,18 +258,18 @@ export function EndpointItem({ method, path, baseUrl, operation }: Props) {
             ([, params]) => params.length > 0,
           ) && (
             <div>
-              <h4 className="border-l-2 border-blue-500 pl-2 text-base font-semibold text-slate-100 mb-2">
+              <h4 className="border-l-2 border-blue-500 pl-2 font-semibold mb-2 text-text-primary">
                 Parameters
               </h4>
               {Object.entries(byLocation).map(([loc, params]) =>
                 params.length === 0 ? null : (
                   <div key={loc} className="mb-3">
-                    <span className="text-xs uppercase text-slate-500 font-semibold">
+                    <span className="text-xs uppercase text-text-muted font-semibold">
                       {loc}
                     </span>
                     <table className="w-full mt-1 text-xs">
                       <thead>
-                        <tr className="text-slate-500 text-left">
+                        <tr className="text-text-muted text-left">
                           <th className="pr-4 pb-1">Name</th>
                           <th className="pr-4 pb-1">Required</th>
                           <th className="pr-4 pb-1">Type</th>
@@ -274,25 +278,22 @@ export function EndpointItem({ method, path, baseUrl, operation }: Props) {
                       </thead>
                       <tbody>
                         {params.map((p) => (
-                          <tr
-                            key={p.name}
-                            className="border-t border-slate-800"
-                          >
-                            <td className="pr-4 py-1 font-mono text-slate-200">
+                          <tr key={p.name} className="border-t border-overlay">
+                            <td className="pr-4 py-1 font-mono text-text-primary">
                               {p.name}
                             </td>
-                            <td className="pr-4 py-1 text-slate-400">
+                            <td className="pr-4 py-1 text-text-secondary">
                               {p.required ? (
                                 <span className="text-red-400">yes</span>
                               ) : (
                                 "no"
                               )}
                             </td>
-                            <td className="pr-4 py-1 text-slate-400">
+                            <td className="pr-4 py-1 text-text-secondary">
                               {(p.schema as OpenAPIV3.SchemaObject)?.type ??
                                 "—"}
                             </td>
-                            <td className="py-1 text-slate-400">
+                            <td className="py-1 text-text-secondary">
                               {p.description ?? "—"}
                             </td>
                           </tr>
@@ -307,7 +308,7 @@ export function EndpointItem({ method, path, baseUrl, operation }: Props) {
 
           {requestBody && (
             <div>
-              <h4 className="border-l-2 border-blue-500 pl-2 text-base font-semibold text-slate-100 mb-2">
+              <h4 className="border-l-2 border-blue-500 pl-2 font-semibold mb-2 text-text-primary">
                 Request Body
                 {requestBody.required && (
                   <span className="text-red-400 text-xs ml-1">required</span>
@@ -322,7 +323,7 @@ export function EndpointItem({ method, path, baseUrl, operation }: Props) {
           )}
 
           <div>
-            <h4 className="border-l-2 border-blue-500 pl-2 text-base font-semibold text-slate-100 mb-2">
+            <h4 className="border-l-2 border-blue-500 pl-2 font-semibold mb-2 text-text-primary">
               Responses
             </h4>
             {Object.entries(responses).map(([status, response]) => (

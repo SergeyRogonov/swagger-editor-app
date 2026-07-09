@@ -10,13 +10,17 @@ export default function AboutPage() {
       <h1 className="text-4xl font-bold">{t("pageTitle")}</h1>
 
       <section className="mt-8 space-y-4">
-        <p className="text-slate-300 leading-7">{t("overviewDescription")}</p>
+        <p className="text-text-secondary leading-7">
+          {t("overviewDescription")}
+        </p>
       </section>
 
       <section className="mt-10 space-y-4">
         <h2 className="text-2xl font-semibold">RS School</h2>
 
-        <p className="text-slate-300 leading-7">{t("courseDescription")}</p>
+        <p className="text-text-secondary leading-7">
+          {t("courseDescription")}
+        </p>
 
         <a
           href="https://rs.school/courses/reactjs"
@@ -60,7 +64,7 @@ export default function AboutPage() {
           ].map((tech) => (
             <span
               key={tech}
-              className="rounded-full bg-slate-800 px-4 py-2 text-sm text-slate-200"
+              className="rounded-full bg-elevated px-4 py-2 text-sm text-text-primary"
             >
               {tech}
             </span>
@@ -71,7 +75,7 @@ export default function AboutPage() {
       <section className="mt-10 space-y-3">
         <h2 className="text-2xl font-semibold">{t("resourcesLabel")}</h2>
 
-        <ul className="list-disc space-y-2 pl-5 text-slate-300">
+        <ul className="list-disc space-y-2 pl-5 text-text-secondary">
           <li>
             <a
               href="https://rs.school/"
