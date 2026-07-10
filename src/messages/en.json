@@ -73,6 +73,25 @@
     "signIn": "Sign in",
     "signUp": "Sing up"
   },
+
+  "sign-validation": {
+    "email": {
+      "required": "You are not input email",
+      "oneAt": "Email need include one symbol @",
+      "localPart": "Email need include email name before symbol @",
+      "domain": "Email need include domain and site name",
+      "nameSymbols": "Email name include \"A-Z\", \"a-z\", \"0-9\", \".\", \"_\""
+    },
+    "password": {
+      "required": "You are not input password",
+      "number": "Password need include one number",
+      "uppercase": "Password need include one UTF-8 uppercase",
+      "lowercase": "Password need include one UTF-8 lowercase",
+      "specialSymbol": "Password need include spec symbol",
+      "minLength": "Password min length is 8 symbols"
+    }
+  },
+
   "history": {
     "title": "History & Analytics",
     "empty": "You haven't executed any requests yet.",
