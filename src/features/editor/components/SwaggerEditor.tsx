@@ -15,6 +15,7 @@ interface SwaggerEditorProps {
   format: SchemaFormat | null;
   onFormatToggle: () => void;
   onSaveSchema: () => void;
+  canSave: boolean;
 }
 
 export function SwaggerEditor({
@@ -25,6 +26,7 @@ export function SwaggerEditor({
   format,
   onFormatToggle,
   onSaveSchema,
+  canSave,
 }: SwaggerEditorProps) {
   const { theme } = useTheme();
 
@@ -37,6 +39,7 @@ export function SwaggerEditor({
           onChange={onChange}
           onFormatToggle={onFormatToggle}
           onSaveSchema={onSaveSchema}
+          canSave={canSave}
         />
       </div>
 

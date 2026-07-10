@@ -89,6 +89,14 @@ export function useSwaggerEditor(initialText: string) {
     buildState(initialText).then(applyState);
   }, [initialText, applyState]);
 
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+
   const processContent = useCallback(
     async (text: string) => {
       applyState(await buildState(text));
@@ -97,13 +105,29 @@ export function useSwaggerEditor(initialText: string) {
   );
 
   const updateContent = useCallback(
-    (text: string) => {
+    (text: string, debounce = true) => {
       setState((prev) => ({ ...prev, rawText: text }));
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => processContent(text), DEBOUNCE_MS);
+
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+
+      if (!debounce) {
+        void processContent(text);
+        return;
+      }
+
+      timerRef.current = setTimeout(() => {
+        void processContent(text);
+      }, DEBOUNCE_MS);
     },
     [processContent],
   );
 
-  return { ...state, displayFormat, setDisplayFormat, updateContent };
+  return {
+    ...state,
+    displayFormat,
+    setDisplayFormat,
+    updateContent,
+  };
 }

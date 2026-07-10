@@ -5,10 +5,11 @@ import { ValidationPanel } from "@/features/editor/components/ValidationPanel";
 import { SwaggerViewer } from "@/features/viewer/components/SwaggerViewer";
 import { DEFAULT_SCHEMA } from "@/lib/editor-defaults";
 import { useSwaggerEditor } from "@/hooks/useSwaggerEditor";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { convertSchema } from "@/services/schemaConverter";
 import { useOrientation } from "@/hooks/useOrientation";
-import { saveSchema } from "@/services/schemaStorage";
+import { loadSchema, saveSchema } from "@/services/schemaStorage";
+import { useAuth } from "@/provider/AuthProvider";
 
 export default function HomePage() {
   const isLandscape = useOrientation();
@@ -22,8 +23,10 @@ export default function HomePage() {
     errors,
     updateContent,
   } = useSwaggerEditor(DEFAULT_SCHEMA);
+  const { isAuth, isLoading } = useAuth();
 
   const [editorSizePct, setEditorSizePct] = useState(50);
+  const [editorReady, setEditorReady] = useState(false);
 
   const clamp = (v: number, min: number, max: number) =>
     Math.min(max, Math.max(min, v));
@@ -72,11 +75,30 @@ export default function HomePage() {
   };
 
   const handleSaveSchema = async () => {
-    await saveSchema();
-    console.info("Schema save requested. Persistence not implemented yet.");
+    await saveSchema(rawText);
   };
 
-  if (isLandscape === null) {
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    const initializeEditor = async () => {
+      if (isAuth) {
+        const saved = await loadSchema();
+
+        if (saved) {
+          updateContent(saved, false);
+        }
+      }
+
+      setEditorReady(true);
+    };
+
+    void initializeEditor();
+  }, [isLoading, isAuth, updateContent]);
+
+  if (isLandscape === null || !editorReady) {
     return (
       <div className="flex h-full items-center justify-center">Loading...</div>
     );
@@ -104,6 +126,7 @@ export default function HomePage() {
               onChange={updateContent}
               onFormatToggle={handleFormatToggle}
               onSaveSchema={handleSaveSchema}
+              canSave={isAuth && !isLoading}
             />
           </div>
 

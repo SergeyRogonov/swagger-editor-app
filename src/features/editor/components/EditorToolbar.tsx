@@ -15,6 +15,7 @@ interface EditorToolbarProps {
   onChange: (value: string) => void;
   onFormatToggle: () => void;
   onSaveSchema: () => void;
+  canSave: boolean;
 }
 
 export function EditorToolbar({
@@ -23,6 +24,7 @@ export function EditorToolbar({
   onChange,
   onFormatToggle,
   onSaveSchema,
+  canSave,
 }: EditorToolbarProps) {
   const t = useTranslations("editor.toolbar");
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -75,7 +77,11 @@ export function EditorToolbar({
         onToggle={onFormatToggle}
       />
 
-      <SaveSchemaButton disabled={!value.trim()} onSave={onSaveSchema} />
+      <SaveSchemaButton
+        disabled={!value.trim()}
+        canSave={canSave}
+        onSave={onSaveSchema}
+      />
     </div>
   );
 }
