@@ -1,18 +1,35 @@
 export interface StoredSchema {
   content: string;
-  updatedAt: string;
 }
 
-export async function saveSchema(): Promise<void> {
-  // TODO:
-  // Replace with authenticated API call when
-  // auth and backend persistence are implemented.
+export async function saveSchema(content: string): Promise<void> {
+  const response = await fetch("/api/schema", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      content,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save schema");
+  }
 }
 
 export async function loadSchema(): Promise<string | null> {
-  // TODO:
-  // Replace with authenticated API call when
-  // auth and backend persistence are implemented.
+  const response = await fetch("/api/schema");
 
-  return null;
+  if (response.status === 204) {
+    return null;
+  }
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const data: StoredSchema = await response.json();
+
+  return data.content;
 }
