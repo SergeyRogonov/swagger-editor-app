@@ -1,24 +1,27 @@
+import { useTranslations } from "next-intl";
 import * as yup from "yup";
 
-const passwordValidation = yup
-  .string()
-  .required()
-  .test({
-    message: "1 number",
-    test: (value) => /\p{Nd}/u.test(value),
-  })
-  .test({
-    message: "1 uppercase",
-    test: (value) => /\p{Lu}/u.test(value),
-  })
-  .test({
-    message: "1 lowercase",
-    test: (value) => /\p{Ll}/u.test(value),
-  })
-  .test({
-    message: "1 special character",
-    test: (value) => /[^\p{L}\p{Nd}]/u.test(value),
-  })
-  .min(8, "Minimum 8 characters");
-
-export default passwordValidation;
+export default function passwordValidation(
+  t: ReturnType<typeof useTranslations>,
+) {
+  return yup
+    .string()
+    .required(t("password.required"))
+    .test({
+      message: t("password.number"),
+      test: (value) => /\p{Nd}/u.test(value),
+    })
+    .test({
+      message: t("password.uppercase"),
+      test: (value) => /\p{Lu}/u.test(value),
+    })
+    .test({
+      message: t("password.lowercase"),
+      test: (value) => /\p{Ll}/u.test(value),
+    })
+    .test({
+      message: t("password.specialSymbol"),
+      test: (value) => /[^\p{L}\p{Nd}]/u.test(value),
+    })
+    .min(8, t("password.minLength"));
+}

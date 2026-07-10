@@ -21,6 +21,7 @@ export default function SignUpPage() {
   const route = useRouter();
 
   const t = useTranslations("sign-up");
+  const VALIDATION_TRANSLATE = useTranslations("sign-validation");
 
   const [isFetch, setIsFetch] = useState<boolean>(false);
   const [fetchError, setFetchError] = useState<null | string>(null);
@@ -41,7 +42,9 @@ export default function SignUpPage() {
       email: "",
       password: "",
     },
-    resolver: yupResolver(getFormSchema()) as Resolver<IReactHookFormData>,
+    resolver: yupResolver(
+      getFormSchema(VALIDATION_TRANSLATE),
+    ) as Resolver<IReactHookFormData>,
     mode: "onChange",
   });
 

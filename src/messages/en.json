@@ -73,6 +73,25 @@
     "signIn": "Sign in",
     "signUp": "Sing up"
   },
+
+  "sign-validation": {
+    "email": {
+      "required": "Email required",
+      "oneAt": "Email must include @",
+      "localPart": "Missing mailbox name before @",
+      "domain": "Missing domain and site name",
+      "nameSymbols": "Use only \"A-Z\", \"a-z\", \"0-9\", \".\", \"_\""
+    },
+    "password": {
+      "required": "Password required",
+      "number": "Add at least one digit",
+      "uppercase": "Add an uppercase letter",
+      "lowercase": "Add a lowercase letter",
+      "specialSymbol": "Add a special character",
+      "minLength": "Min 8 characters"
+    }
+  },
+
   "history": {
     "title": "History & Analytics",
     "empty": "You haven't executed any requests yet.",
