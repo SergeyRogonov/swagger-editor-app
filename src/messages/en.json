@@ -76,19 +76,19 @@
 
   "sign-validation": {
     "email": {
-      "required": "You are not input email",
-      "oneAt": "Email need include one symbol @",
-      "localPart": "Email need include email name before symbol @",
-      "domain": "Email need include domain and site name",
-      "nameSymbols": "Email name include \"A-Z\", \"a-z\", \"0-9\", \".\", \"_\""
+      "required": "Email required",
+      "oneAt": "Email must include @",
+      "localPart": "Missing mailbox name before @",
+      "domain": "Missing domain and site name",
+      "nameSymbols": "Use only \"A-Z\", \"a-z\", \"0-9\", \".\", \"_\""
     },
     "password": {
-      "required": "You are not input password",
-      "number": "Password need include one number",
-      "uppercase": "Password need include one UTF-8 uppercase",
-      "lowercase": "Password need include one UTF-8 lowercase",
-      "specialSymbol": "Password need include spec symbol",
-      "minLength": "Password min length is 8 symbols"
+      "required": "Password required",
+      "number": "Add at least one digit",
+      "uppercase": "Add an uppercase letter",
+      "lowercase": "Add a lowercase letter",
+      "specialSymbol": "Add a special character",
+      "minLength": "Min 8 characters"
     }
   },
 
