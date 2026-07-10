@@ -171,7 +171,7 @@ export default function SignUpPage() {
           </button>
         </form>
         <p className="mt-6 text-center text-sm text-text-muted">
-          {t("isHaveAccount")}{" "}
+          {t("haveAnAccount")}{" "}
           <Link href="/sign-in" className={`font-mediumg ${LINK_CLASS_NAME}`}>
             {t("signIn")}
           </Link>

@@ -69,7 +69,7 @@
     "emailTitle": "Электронная почта",
     "passwordTitle": "Пароль",
     "sendingForm": "Отправка формы",
-    "isHaveAccount": "Есть аккаунт?",
+    "haveAnAccount": "Есть аккаунт?",
     "signIn": "Войти",
     "signUp": "Зарегистрироваться"
   },
