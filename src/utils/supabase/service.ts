@@ -1,15 +1,11 @@
 import { createClient } from "@supabase/supabase-js";
-import { getSupabaseUrl } from "./connect";
+import { getSupabaseServiceRoleKey, getSupabaseUrl } from "./connect";
 
 export function createServiceClient() {
-  return createClient(
-    getSupabaseUrl(),
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-      },
+  return createClient(getSupabaseUrl(), getSupabaseServiceRoleKey(), {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
     },
-  );
+  });
 }
