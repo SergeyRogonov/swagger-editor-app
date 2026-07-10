@@ -4,25 +4,26 @@
 1. Install [VS Code](https://code.visualstudio.com/download)
 1. Install [NodeJS](https://nodejs.org/en/download)
 1. Clone repo
-    ```
-    d:
-    cd d:/
-    git clone git@github.com:Tuulenchik/swagger-editor-app.git
-    ```
+   ```
+   d:
+   cd d:/
+   git clone git@github.com:Tuulenchik/swagger-editor-app.git
+   ```
 1. Open on VS Code
-    ```
-    cd swagger-editor-app
-    code ./
-    ```
+   ```
+   cd swagger-editor-app
+   code ./
+   ```
 1. Install node modules
-    ```
-    npm i
-    ```
+   ```
+   npm i
+   ```
 1. Copy `.env.example` to file `.env`
-    ```
-    copy
+   ```
+   copy
+   ```
 1. Run project
-    ```
-    npm run dev
-    ```
+   ```
+   npm run dev
+   ```
 1. Enjoy & coffee
