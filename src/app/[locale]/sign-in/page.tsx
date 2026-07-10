@@ -21,6 +21,7 @@ export default function SignInPage() {
   const route = useRouter();
 
   const t = useTranslations("sign-in");
+  const BACKEND_LOGIN_TRANSLATE = useTranslations("backend.login");
   const VALIDATION_TRANSLATE = useTranslations("sign-validation");
 
   const [isFetch, setIsFetch] = useState<boolean>(false);
@@ -68,6 +69,17 @@ export default function SignInPage() {
         try {
           const DATA = await RESPOSNE.json();
           message = DATA.message;
+
+          switch (message) {
+            case "EMAIL_IS_REQUIRED":
+            case "INVALID_EMAIL":
+            case "PASSWORD_IS_REQUIRED":
+            case "USER_NOT_FOUND":
+            case "NO_SUCCESS_PASSWORD":
+            case "AUTH_SUCCESS":
+              message = BACKEND_LOGIN_TRANSLATE(message);
+              break;
+          }
         } catch (exception) {
           const TEXT = await RESPOSNE.text();
           message = `${TEXT}\n${exception}`;
