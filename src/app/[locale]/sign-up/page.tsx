@@ -21,6 +21,7 @@ export default function SignUpPage() {
   const route = useRouter();
 
   const t = useTranslations("sign-up");
+  const BACKEND_REGISTER_TRANSLATE = useTranslations("backend.register");
   const VALIDATION_TRANSLATE = useTranslations("sign-validation");
 
   const [isFetch, setIsFetch] = useState<boolean>(false);
@@ -69,6 +70,16 @@ export default function SignUpPage() {
         try {
           const DATA = await RESPOSNE.json();
           message = DATA.message;
+
+          switch (message) {
+            case "EMAIL_IS_REQUIRED":
+            case "INVALID_EMAIL":
+            case "PASSWORD_IS_REQUIRED":
+            case "EMAIL_ALREADY_TAKEN":
+            case "AUTH_SUCCESS":
+              message = BACKEND_REGISTER_TRANSLATE(message);
+              break;
+          }
         } catch (exception) {
           const TEXT = await RESPOSNE.text();
           message = `${TEXT}\n${exception}`;

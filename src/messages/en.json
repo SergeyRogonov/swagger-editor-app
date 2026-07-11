@@ -117,5 +117,22 @@
     "responseSizeUnit": "{size} B",
     "durationUnit": "{duration}ms",
     "requestHint": "Go to the {editor} or {viewer} to make your first request."
+  },
+  "backend": {
+    "register": {
+      "EMAIL_IS_REQUIRED": "Please enter your email",
+      "INVALID_EMAIL": "Please enter a valid email address",
+      "PASSWORD_IS_REQUIRED": "Please enter your password",
+      "EMAIL_ALREADY_TAKEN": "This email is already in use",
+      "AUTH_SUCCESS": "Registration successful! Welcome aboard"
+    },
+    "login": {
+      "EMAIL_IS_REQUIRED": "Please enter your email",
+      "INVALID_EMAIL": "Please enter a valid email address",
+      "PASSWORD_IS_REQUIRED": "Please enter your password",
+      "USER_NOT_FOUND": "No account found",
+      "NO_SUCCESS_PASSWORD": "Wrong password",
+      "AUTH_SUCCESS": "Welcome back! You are now signed in"
+    }
   }
 }

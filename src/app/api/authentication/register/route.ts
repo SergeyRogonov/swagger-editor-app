@@ -15,21 +15,18 @@ export async function POST(request: NextRequest) {
 
     if (!email) {
       return NextResponse.json(
-        { message: "Не указан параметр email" },
+        { message: "EMAIL_IS_REQUIRED" },
         { status: 400 },
       );
     }
 
     if (!isValidEmail(email)) {
-      return NextResponse.json(
-        { message: "Вы передаете не валидный email" },
-        { status: 400 },
-      );
+      return NextResponse.json({ message: "INVALID_EMAIL" }, { status: 400 });
     }
 
     if (!password) {
       return NextResponse.json(
-        { message: "Не указан параметр password" },
+        { message: "PASSWORD_IS_REQUIRED" },
         { status: 400 },
       );
     }
@@ -55,7 +52,7 @@ export async function POST(request: NextRequest) {
     if (usersByEmail.length > 0) {
       return NextResponse.json(
         {
-          message: "Такой email уже занят",
+          message: "EMAIL_ALREADY_TAKEN",
         },
         { status: 409 },
       );
@@ -113,7 +110,7 @@ export async function POST(request: NextRequest) {
 
     const RESPONSE = NextResponse.json(
       {
-        message: "Вы зарегистрированы",
+        message: "AUTH_SUCCESS",
         data: {
           accessToken: ACCESS_TOKEN,
         },

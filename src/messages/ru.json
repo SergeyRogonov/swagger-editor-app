@@ -117,5 +117,22 @@
     "responseSizeUnit": "{size} Б",
     "durationUnit": "{duration} мс",
     "requestHint": "Перейдите в {editor} или {viewer}, чтобы выполнить первый запрос."
+  },
+  "backend": {
+    "register": {
+      "EMAIL_IS_REQUIRED": "Укажите электронную почту",
+      "INVALID_EMAIL": "Проверьте правильность электронной почты",
+      "PASSWORD_IS_REQUIRED": "Введите пароль",
+      "EMAIL_ALREADY_TAKEN": "Этот email уже используется",
+      "AUTH_SUCCESS": "Регистрация прошла успешно! Добро пожаловать"
+    },
+    "login": {
+      "EMAIL_IS_REQUIRED": "Укажите электронную почту",
+      "INVALID_EMAIL": "Проверьте правильность электронной почты",
+      "PASSWORD_IS_REQUIRED": "Введите пароль",
+      "USER_NOT_FOUND": "Такой пользователь не зарегистрирован",
+      "NO_SUCCESS_PASSWORD": "Введен не верный пароль",
+      "AUTH_SUCCESS": "Добро пожаловать! Вы успешно вошли"
+    }
   }
 }
