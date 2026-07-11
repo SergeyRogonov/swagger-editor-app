@@ -307,7 +307,7 @@ export function EndpointItem({ method, path, baseUrl, operation }: Props) {
           )}
 
           {requestBody && (
-            <div>
+            <div data-testid="request-body">
               <h4 className="border-l-2 border-blue-500 pl-2 font-semibold mb-2 text-text-primary">
                 Request Body
                 {requestBody.required && (
