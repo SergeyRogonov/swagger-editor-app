@@ -1,4 +1,4 @@
-import { ISupabaseUsersDto } from "@/app/dto/users";
+import { ISupabaseUsersDto } from "@/types/users";
 import { setAccessTokenCookie } from "@/utils/cookieHelper/cookieHelper";
 import { generateHashPassword } from "@/utils/hashPasswordLib/hashPasswordLib";
 import isValidEmail from "@/utils/isValidEmail/isValidEmail";

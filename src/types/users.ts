@@ -20,4 +20,17 @@ interface ISupabasePasswordUsersDto {
   error: PostgrestError | null;
 }
 
-export type { IUserDto, ISupabaseUsersDto, ISupabasePasswordUsersDto };
+interface ISupabaseForgetPasswordUsersDto {
+  data: Array<{
+    id: IUserDto["id"];
+    email: IUserDto["email"];
+  }>;
+  error: PostgrestError | null;
+}
+
+export type {
+  IUserDto,
+  ISupabaseUsersDto,
+  ISupabasePasswordUsersDto,
+  ISupabaseForgetPasswordUsersDto,
+};
