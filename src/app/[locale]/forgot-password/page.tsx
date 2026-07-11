@@ -5,6 +5,7 @@ import { useAuth } from "@/provider/AuthProvider";
 import ReactHookFormError from "@/shared/components/ReactHookFormError";
 import FormErrorMessage from "@/shared/components/SignForm/FormErrorMessage";
 import FormSuccessMessage from "@/shared/components/SignForm/FormSuccessMessage";
+import SignForm from "@/shared/components/SignForm/SignForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -110,49 +111,43 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <main className="mx-auto max-w-md px-6 py-12">
-      <div className="rounded-lg border border-overlay bg-elevated p-8 shadow-sm">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-text-primary">{t("title")}</h1>
-          <p className="mt-2 text-text-muted">{t("subTitle")}</p>
-        </div>
-        <FormSuccessMessage message={successMessage} />
-        <FormErrorMessage message={fetchError} />
-        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field, fieldState: { error } }) => {
-              const ID = "form__email";
-              return (
-                <div>
-                  <label htmlFor={ID} className={LABEL_CLASS_NAME}>
-                    {t("emailTitle")}
-                  </label>
-                  <div className="mt-1 pt-1">
-                    <input
-                      id={ID}
-                      type="email"
-                      placeholder="example@host.local"
-                      className={INPUT_CLASS_NAME}
-                      {...field}
-                    />
-                  </div>
-                  <ReactHookFormError error={error} />
+    <SignForm title={t("title")} subTitle={t("subTitle")}>
+      <FormSuccessMessage message={successMessage} />
+      <FormErrorMessage message={fetchError} />
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState: { error } }) => {
+            const ID = "form__email";
+            return (
+              <div>
+                <label htmlFor={ID} className={LABEL_CLASS_NAME}>
+                  {t("emailTitle")}
+                </label>
+                <div className="mt-1 pt-1">
+                  <input
+                    id={ID}
+                    type="email"
+                    placeholder="example@host.local"
+                    className={INPUT_CLASS_NAME}
+                    {...field}
+                  />
                 </div>
-              );
-            }}
-          />
+                <ReactHookFormError error={error} />
+              </div>
+            );
+          }}
+        />
 
-          <button
-            type="submit"
-            className="w-full rounded-md bg-blue-600 text-white px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
-            disabled={!isValid || isFetch}
-          >
-            {isFetch ? t("sendingForm") : t("send")}
-          </button>
-        </form>
-      </div>
-    </main>
+        <button
+          type="submit"
+          className="w-full rounded-md bg-blue-600 text-white px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={!isValid || isFetch}
+        >
+          {isFetch ? t("sendingForm") : t("send")}
+        </button>
+      </form>
+    </SignForm>
   );
 }
