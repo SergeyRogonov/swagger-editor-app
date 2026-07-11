@@ -74,6 +74,14 @@
     "signUp": "Sing up"
   },
 
+  "forgot-password": {
+    "title": "Forgot your password?",
+    "subTitle": "Enter your email address",
+    "emailTitle": "E-mail",
+    "sendingForm": "Sending form",
+    "send": "Send"
+  },
+
   "sign-validation": {
     "email": {
       "required": "Email required",
@@ -125,6 +133,12 @@
       "PASSWORD_IS_REQUIRED": "Please enter your password",
       "EMAIL_ALREADY_TAKEN": "This email is already in use",
       "AUTH_SUCCESS": "Registration successful! Welcome aboard"
+    },
+    "forgot-password": {
+      "EMAIL_IS_REQUIRED": "Please enter your email",
+      "INVALID_EMAIL": "Please enter a valid email address",
+      "USER_NOT_FOUND": "No account found",
+      "SUCCESS": "New password is send to email"
     },
     "login": {
       "EMAIL_IS_REQUIRED": "Please enter your email",
