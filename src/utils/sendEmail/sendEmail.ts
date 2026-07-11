@@ -12,7 +12,11 @@ function getTransport() {
   });
 }
 
-export async function sendEmail(to: string, subject: string, html: string) {
+export default async function sendEmail(
+  to: string,
+  subject: string,
+  html: string,
+) {
   const TRANSPORT = getTransport();
   await TRANSPORT.sendMail({
     from: `Server <${process.env.EMAIL_USER}>`,
