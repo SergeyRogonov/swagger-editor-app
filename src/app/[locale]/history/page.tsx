@@ -68,11 +68,6 @@ export default async function HistoryPage() {
                   {chunks}
                 </Link>
               ),
-              viewer: (chunks) => (
-                <Link href="/" className="text-accent hover:underline">
-                  {chunks}
-                </Link>
-              ),
             })}
           </p>
         </div>
