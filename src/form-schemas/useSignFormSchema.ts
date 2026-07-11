@@ -3,7 +3,7 @@ import emailValidation from "./emailValidation";
 import passwordValidation from "./passwordValidation";
 import { useTranslations } from "next-intl";
 
-export function getFormSchema(t: ReturnType<typeof useTranslations>) {
+export function useSignFormSchema(t: ReturnType<typeof useTranslations>) {
   return yup.object({
     email: emailValidation(t),
     password: passwordValidation(t),

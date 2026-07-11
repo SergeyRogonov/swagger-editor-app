@@ -1,6 +1,6 @@
 "use client";
 
-import { getFormSchema } from "@/form-schemas/useFormSchema";
+import { useSignFormSchema } from "@/form-schemas/useSignFormSchema";
 import { useAuth } from "@/provider/AuthProvider";
 import ReactHookFormError from "@/shared/components/ReactHookFormError";
 import FormErrorMessage from "@/shared/components/SignForm/FormErrorMessage";
@@ -45,7 +45,7 @@ export default function SignUpPage() {
       password: "",
     },
     resolver: yupResolver(
-      getFormSchema(VALIDATION_TRANSLATE),
+      useSignFormSchema(VALIDATION_TRANSLATE),
     ) as Resolver<IReactHookFormData>,
     mode: "onChange",
   });
