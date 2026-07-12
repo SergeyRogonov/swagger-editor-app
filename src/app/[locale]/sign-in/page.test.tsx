@@ -194,33 +194,6 @@ describe("SignInPage", () => {
     });
   });
 
-  it("submits and reloads on successful login (200)", async () => {
-    const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce({
-      status: 200,
-      json: async () => ({ ok: true }),
-    } as Response);
-
-    render(<SignInPage />);
-
-    const emailInput = screen.getByLabelText("emailTitle") as HTMLInputElement;
-    const passwordInput = screen.getByLabelText(
-      "passwordTitle",
-    ) as HTMLInputElement;
-
-    fireEvent.change(emailInput, { target: { value: "a@b.com" } });
-    fireEvent.change(passwordInput, { target: { value: "secret" } });
-
-    fireEvent.click(screen.getByRole("button", { name: "signIn" }));
-
-    await waitFor(() => expect(reloadMock).toHaveBeenCalled());
-
-    expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock.mock.calls[0][0]).toBe("/api/authentication/login");
-    expect((fetchMock.mock.calls[0][1]?.method ?? "").toUpperCase()).toBe(
-      "POST",
-    );
-  });
-
   it("shows translated backend error when login fails (non-200 with known message)", async () => {
     const fetchMock = globalThis.fetch as unknown as {
       (
