@@ -66,7 +66,7 @@ vi.mock("react-hook-form", async () => {
     Controller: ({ render }: ControllerProps) => {
       const field = {
         value: "",
-        onChange: (_v: string) => {},
+        onChange: () => {},
         name: "",
         onBlur: () => {},
       };
