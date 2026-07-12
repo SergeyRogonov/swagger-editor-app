@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (usersByEmail.length == 0) {
+    if (usersByEmail.length === 0) {
       return NextResponse.json(
         {
           status: 404,
