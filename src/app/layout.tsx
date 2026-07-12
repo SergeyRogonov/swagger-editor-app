@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/provider/ThemeProvider";
 
@@ -48,7 +48,6 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/favicon/manifest.webmanifest",
-  themeColor: "#f8f9fa",
   appleWebApp: {
     title: "Swagger UI (Coffee-Driven Development)",
     statusBarStyle: "default",
@@ -58,6 +57,13 @@ export const metadata: Metadata = {
     "msapplication-TileImage": "/favicon/favicon_144.png",
     "msapplication-config": "/favicon/ieconfig.xml",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f7fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+  ],
 };
 
 export default function RootLayout({
