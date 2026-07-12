@@ -25,11 +25,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       try {
         const RESPONSE = await fetch("/api/authentication/is-auth", {
           method: "POST",
+          credentials: "include",
         });
 
         await AsyncSleep(200);
-
-        setIsAuth(RESPONSE.status === 200);
+        const data = await RESPONSE.json();
+        setIsAuth(data.authenticated === true);
       } catch {
         setIsAuth(false);
       } finally {
