@@ -19,9 +19,7 @@ export async function POST() {
       return NextResponse.json(
         {
           status: 401,
-          message: "Вы не авторизованы",
-          messageMore:
-            "Вы не авторизованы, так как не указан Access Token в Cookie",
+          message: "NO_AUTH_NO_TOKEN",
         },
         { status: 200 },
       );
@@ -34,8 +32,7 @@ export async function POST() {
         return NextResponse.json(
           {
             status: 401,
-            message: "Вы не авторизованы",
-            messageMore: "Вы не авторизованы, так как Access Token просрочен",
+            message: "NO_AUTH_EXPIRED_TOKEN",
           },
           { status: 200 },
         );
@@ -60,7 +57,7 @@ export async function POST() {
     const RESPONSE = NextResponse.json(
       {
         status: 200,
-        message: "Вы вышли из аккаунта",
+        message: "LOGOUT_SUCCESS",
       },
       { status: 200 },
     );
