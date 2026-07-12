@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/provider/ThemeProvider";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://swagger-editor-app-sigma.vercel.app"),
   title: "Swagger/OpenAPI UI",
   description: "Swagger/OpenAPI editor and REST client",
   applicationName: "Swagger UI (Coffee-Driven Development)",
