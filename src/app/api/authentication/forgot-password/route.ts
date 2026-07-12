@@ -15,13 +15,22 @@ export async function POST(request: NextRequest) {
 
     if (!email) {
       return NextResponse.json(
-        { message: "EMAIL_IS_REQUIRED" },
-        { status: 400 },
+        {
+          status: 400,
+          message: "EMAIL_IS_REQUIRED",
+        },
+        { status: 200 },
       );
     }
 
     if (!isValidEmail(email)) {
-      return NextResponse.json({ message: "INVALID_EMAIL" }, { status: 400 });
+      return NextResponse.json(
+        {
+          status: 400,
+          message: "INVALID_EMAIL",
+        },
+        { status: 200 },
+      );
     }
 
     const cookieStore = await cookies();
@@ -36,18 +45,20 @@ export async function POST(request: NextRequest) {
     if (errorFindUserByEmail) {
       return NextResponse.json(
         {
+          status: 500,
           message: errorFindUserByEmail.message,
         },
-        { status: 500 },
+        { status: 200 },
       );
     }
 
     if (usersByEmail.length == 0) {
       return NextResponse.json(
         {
+          status: 404,
           message: "USER_NOT_FOUND",
         },
-        { status: 404 },
+        { status: 200 },
       );
     }
 
@@ -65,9 +76,10 @@ export async function POST(request: NextRequest) {
     if (updateError) {
       return NextResponse.json(
         {
+          status: 500,
           message: updateError.message,
         },
-        { status: 500 },
+        { status: 200 },
       );
     }
 
@@ -81,15 +93,22 @@ export async function POST(request: NextRequest) {
 
     await sendEmail(EMAIL_TO, EMAIL_TITLE, EMAIL_HTML);
 
-    const RESPONSE = NextResponse.json({ message: "SUCCESS" }, { status: 200 });
+    const RESPONSE = NextResponse.json(
+      {
+        status: 200,
+        message: "SUCCESS",
+      },
+      { status: 200 },
+    );
 
     return RESPONSE;
   } catch (exception) {
     return NextResponse.json(
       {
+        status: 500,
         message: `${exception}`,
       },
-      { status: 500 },
+      { status: 200 },
     );
   }
 }
