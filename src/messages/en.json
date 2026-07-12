@@ -1,0 +1,153 @@
+{
+  "header": {
+    "appName": "Swagger Editor App",
+    "about": "About",
+    "history": "History",
+    "signOut": "Sign out",
+    "signIn": "Sign in",
+    "signUp": "Sign up"
+  },
+
+  "auth-spinner": {
+    "authCheck": "Auth is checking"
+  },
+
+  "about": {
+    "pageTitle": "About the Project",
+    "overviewDescription": "This application is a Swagger/OpenAPI UI that allows users to load, edit and validate OpenAPI specifications, inspect API endpoints and interact with REST services through an intuitive interface. The project was developed as the final team assignment for the RS School React course.",
+    "courseDescription": "RS School is a free community-driven educational program that teaches modern web development through practical tasks and team collaboration. The React course focuses on building production-ready applications using modern technologies and best practices.",
+    "courseLinkText": "Learn more about the RS School React course",
+    "team": {
+      "title": "Development Team",
+      "members": {
+        "pavelhalanin": {
+          "name": "Pavel Galanin",
+          "role": "Navigation & Header, Authentication"
+        },
+        "SergeyRogonov": {
+          "name": "Sergey Rogonov",
+          "role": "Team Lead, Swagger Editor, API Viewer, About Page"
+        }
+      }
+    },
+    "technologiesLabel": "Technologies",
+    "resourcesLabel": "Resources"
+  },
+
+  "editor": {
+    "toolbar": {
+      "clear": "Clear Editor",
+      "load": "Load File"
+    },
+    "formatToggle": {
+      "toJson": "Convert to JSON",
+      "toYaml": "Convert to YAML"
+    },
+    "save": {
+      "button": "Save Schema",
+      "hoverTitle": "Sign in to save schemas"
+    },
+    "validation": {
+      "title": "Validation failed"
+    }
+  },
+
+  "sign-in": {
+    "title": "Log in to your account",
+    "subTitle": "Enter your login details",
+    "emailTitle": "E-mail",
+    "passwordTitle": "Password",
+    "forgetPassword": "Forget password?",
+    "sendingForm": "Sending form",
+    "signIn": "Sign in",
+    "noAccount": "No account?",
+    "signUp": "Sing up"
+  },
+
+  "sign-up": {
+    "title": "Registration",
+    "subTitle": "Enter your details",
+    "emailTitle": "E-mail",
+    "passwordTitle": "Password",
+    "sendingForm": "Sending form",
+    "haveAnAccount": "Do you have an account?",
+    "signIn": "Sign in",
+    "signUp": "Sing up"
+  },
+
+  "forgot-password": {
+    "title": "Forgot your password?",
+    "subTitle": "Enter your email address",
+    "emailTitle": "E-mail",
+    "sendingForm": "Sending form",
+    "send": "Send"
+  },
+
+  "sign-validation": {
+    "email": {
+      "required": "Email required",
+      "oneAt": "Email must include @",
+      "localPart": "Missing mailbox name before @",
+      "domain": "Missing domain and site name",
+      "nameSymbols": "Use only \"A-Z\", \"a-z\", \"0-9\", \".\", \"_\""
+    },
+    "password": {
+      "required": "Password required",
+      "number": "Add at least one digit",
+      "uppercase": "Add an uppercase letter",
+      "lowercase": "Add a lowercase letter",
+      "specialSymbol": "Add a special character",
+      "minLength": "Min 8 characters"
+    }
+  },
+
+  "history": {
+    "title": "History & Analytics",
+    "empty": "You haven't executed any requests yet.",
+    "editor": "Editor",
+    "viewer": "Viewer",
+    "goTo": "Go to the <editor>Editor</editor> to make your first request.",
+
+    "method": "Method",
+    "status": "Status",
+    "duration": "Duration",
+    "timestamp": "Timestamp",
+    "requestSize": "Request size",
+    "responseSize": "Response size",
+    "endpoint": "Endpoint",
+
+    "error": "Error",
+    "requestBody": "Request body",
+    "responseBody": "Response body",
+    "responseHeaders": "Response headers",
+
+    "none": "—",
+    "requestSizeUnit": "{size} B",
+    "responseSizeUnit": "{size} B",
+    "durationUnit": "{duration}ms",
+    "requestHint": "Go to the {editor} or {viewer} to make your first request."
+  },
+  "backend": {
+    "register": {
+      "EMAIL_IS_REQUIRED": "Please enter your email",
+      "INVALID_EMAIL": "Please enter a valid email address",
+      "PASSWORD_IS_REQUIRED": "Please enter your password",
+      "EMAIL_ALREADY_TAKEN": "This email is already in use",
+      "AUTH_SUCCESS": "Registration successful! Welcome aboard"
+    },
+    "forgot-password": {
+      "EMAIL_IS_REQUIRED": "Please enter your email",
+      "INVALID_EMAIL": "Please enter a valid email address",
+      "USER_NOT_FOUND": "No account found",
+      "SUCCESS": "New password is send to email"
+    },
+    "login": {
+      "EMAIL_IS_REQUIRED": "Please enter your email",
+      "INVALID_EMAIL": "Please enter a valid email address",
+      "PASSWORD_IS_REQUIRED": "Please enter your password",
+      "USER_NOT_FOUND": "No account found",
+      "NO_SUCCESS_PASSWORD": "Wrong password",
+      "AUTH_SUCCESS": "Welcome back! You are now signed in"
+    }
+  }
+}
