@@ -7,11 +7,13 @@ import {
   useEffect,
   useState,
   ReactNode,
+  useCallback,
 } from "react";
 
 interface AuthContextType {
   isAuth: boolean;
   isLoading: boolean;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -43,8 +45,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuthOnMount();
   }, []);
 
+  const logout = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await fetch("/api/authentication/logout", { method: "POST" });
+      setIsAuth(false);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isAuth, isLoading }}>
+    <AuthContext.Provider value={{ isAuth, isLoading, logout }}>
       {children}
     </AuthContext.Provider>
   );

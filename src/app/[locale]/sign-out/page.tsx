@@ -2,25 +2,22 @@
 
 import { useAuth } from "@/provider/AuthProvider";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function SignOutPage() {
-  const { isAuth } = useAuth();
-  const route = useRouter();
+  const { isAuth, logout } = useAuth();
+  const router = useRouter();
+  const ranRef = useRef(false);
 
   useEffect(() => {
-    (async function () {
-      if (isAuth) {
-        await fetch("/api/authentication/logout", {
-          method: "POST",
-        });
+    if (!isAuth || ranRef.current) return;
 
-        window.location.reload();
-      } else {
-        route.push("/");
-      }
+    ranRef.current = true;
+    (async () => {
+      await logout();
+      router.replace("/");
     })();
-  }, [route, isAuth]);
+  }, [isAuth, logout, router]);
 
   return null;
 }

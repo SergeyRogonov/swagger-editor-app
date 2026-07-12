@@ -3,7 +3,9 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import SignOutPage from "./page";
 
 const pushMock = vi.fn();
+const replaceMock = vi.fn();
 const useAuthMock = vi.fn();
+const logoutMock = vi.fn();
 
 vi.mock("@/provider/AuthProvider", () => ({
   useAuth: () => useAuthMock(),
@@ -12,48 +14,39 @@ vi.mock("@/provider/AuthProvider", () => ({
 vi.mock("next/navigation", () => ({
   useRouter: () => ({
     push: pushMock,
+    replace: replaceMock,
   }),
 }));
 
 beforeEach(() => {
   pushMock.mockClear();
+  replaceMock.mockClear();
   useAuthMock.mockClear();
-
-  vi.stubGlobal("fetch", vi.fn());
-  Object.defineProperty(window, "location", {
-    value: { reload: vi.fn() },
-    writable: true,
-  });
+  logoutMock.mockClear();
 });
 
 describe("SignOutPage", () => {
-  it("when not authenticated, redirects to /", async () => {
-    useAuthMock.mockReturnValue({ isAuth: false });
+  it("when not authenticated, does not redirect", async () => {
+    useAuthMock.mockReturnValue({ isAuth: false, logout: logoutMock });
 
     render(<SignOutPage />);
 
     await waitFor(() => {
-      expect(pushMock).toHaveBeenCalledWith("/");
+      expect(pushMock).not.toHaveBeenCalled();
+      expect(replaceMock).not.toHaveBeenCalled();
+      expect(logoutMock).not.toHaveBeenCalled();
     });
   });
 
-  it("when authenticated, POSTs logout and reloads the page", async () => {
-    useAuthMock.mockReturnValue({ isAuth: true });
-
-    const fetchMock = vi.mocked(globalThis.fetch);
-    fetchMock.mockResolvedValue(new Response(null, { status: 200 }));
-
-    const reloadMock = vi
-      .spyOn(window.location, "reload")
-      .mockImplementation(() => {});
+  it("when authenticated, calls logout and redirects to /", async () => {
+    useAuthMock.mockReturnValue({ isAuth: true, logout: logoutMock });
+    logoutMock.mockResolvedValueOnce(undefined);
 
     render(<SignOutPage />);
 
     await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledWith("/api/authentication/logout", {
-        method: "POST",
-      });
-      expect(reloadMock).toHaveBeenCalled();
+      expect(logoutMock).toHaveBeenCalled();
+      expect(replaceMock).toHaveBeenCalledWith("/");
     });
   });
 });

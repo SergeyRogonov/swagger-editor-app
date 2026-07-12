@@ -20,7 +20,10 @@ export async function GET() {
   const userId = await getUserId();
 
   if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { status: 401, message: "Unauthorized" },
+      { status: 200 },
+    );
   }
 
   const supabase = createServiceClient();
@@ -32,7 +35,10 @@ export async function GET() {
     .maybeSingle();
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { status: 500, message: error.message },
+      { status: 200 },
+    );
   }
 
   if (!data) {
@@ -48,13 +54,19 @@ export async function POST(req: NextRequest) {
   const userId = await getUserId();
 
   if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { status: 401, message: "Unauthorized" },
+      { status: 200 },
+    );
   }
 
   const { content } = await req.json();
 
   if (typeof content !== "string") {
-    return NextResponse.json({ error: "content is required" }, { status: 400 });
+    return NextResponse.json(
+      { status: 400, message: "content is required" },
+      { status: 200 },
+    );
   }
 
   const supabase = createServiceClient();
@@ -71,7 +83,10 @@ export async function POST(req: NextRequest) {
   );
 
   if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { status: 500, message: error.message },
+      { status: 200 },
+    );
   }
 
   return NextResponse.json({ success: true });

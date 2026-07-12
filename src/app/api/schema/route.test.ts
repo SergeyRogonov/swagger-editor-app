@@ -29,7 +29,6 @@ function createNextRequestWithJson(
 }
 
 function mockSupabaseChainForGet(args: {
-  selectReturn?: unknown;
   maybeSingleReturnData?: unknown;
   maybeSingleReturnError?: { message: string } | null;
 }) {
@@ -74,31 +73,37 @@ describe("schema/route", () => {
     vi.clearAllMocks();
   });
 
-  it("GET returns 401 when no token cookie", async () => {
+  it("GET returns unauthorized when no token cookie", async () => {
     vi.mocked(cookieHelper.getAccessTokenCookie).mockResolvedValue("");
-    vi.mocked(jwtLib.decrypt).mockResolvedValue({
-      data: { type: "access", userId: 123 },
-    });
-
-    const { fromMock } = mockSupabaseChainForGet({
-      maybeSingleReturnData: { schema_content: "abc" },
-      maybeSingleReturnError: null,
-    });
-
-    vi.mocked(supabaseSvc.createServiceClient).mockReturnValue({
-      from: fromMock,
-    } as unknown as ReturnType<typeof supabaseSvc.createServiceClient>);
 
     const res = await route.GET();
 
     expect(res).toBeInstanceOf(NextResponse);
-    expect(res.status).toBe(401);
+    expect(res.status).toBe(200);
 
     const body = await res.json();
-    expect(body).toEqual({ error: "Unauthorized" });
+    expect(body).toEqual({
+      status: 401,
+      message: "Unauthorized",
+    });
   });
 
-  it("GET returns 500 when supabase returns error", async () => {
+  it("GET returns unauthorized when decrypt throws", async () => {
+    vi.mocked(cookieHelper.getAccessTokenCookie).mockResolvedValue("token");
+    vi.mocked(jwtLib.decrypt).mockRejectedValue(new Error("bad token"));
+
+    const res = await route.GET();
+
+    expect(res.status).toBe(200);
+
+    const body = await res.json();
+    expect(body).toEqual({
+      status: 401,
+      message: "Unauthorized",
+    });
+  });
+
+  it("GET returns 500 payload when supabase returns error", async () => {
     vi.mocked(cookieHelper.getAccessTokenCookie).mockResolvedValue("token");
     vi.mocked(jwtLib.decrypt).mockResolvedValue({
       data: { type: "access", userId: 123 },
@@ -115,9 +120,13 @@ describe("schema/route", () => {
 
     const res = await route.GET();
 
-    expect(res.status).toBe(500);
+    expect(res.status).toBe(200);
+
     const body = await res.json();
-    expect(body).toEqual({ error: "db failed" });
+    expect(body).toEqual({
+      status: 500,
+      message: "db failed",
+    });
   });
 
   it("GET returns 204 when no data", async () => {
@@ -158,40 +167,72 @@ describe("schema/route", () => {
     const res = await route.GET();
 
     expect(res.status).toBe(200);
+
     const body = await res.json();
-    expect(body).toEqual({ content: "schema-1" });
+    expect(body).toEqual({
+      content: "schema-1",
+    });
   });
 
-  it("POST returns 401 when no token cookie", async () => {
+  it("POST returns unauthorized when no token cookie", async () => {
     vi.mocked(cookieHelper.getAccessTokenCookie).mockResolvedValue("");
 
     const res = await route.POST(createNextRequestWithJson({ content: "x" }));
 
-    expect(res.status).toBe(401);
+    expect(res.status).toBe(200);
+
     const body = await res.json();
-    expect(body).toEqual({ error: "Unauthorized" });
+    expect(body).toEqual({
+      status: 401,
+      message: "Unauthorized",
+    });
   });
 
-  it("POST returns 400 when content is not a string", async () => {
+  it("POST returns unauthorized when decrypt throws", async () => {
+    vi.mocked(cookieHelper.getAccessTokenCookie).mockResolvedValue("token");
+    vi.mocked(jwtLib.decrypt).mockRejectedValue(new Error("bad token"));
+
+    const res = await route.POST(
+      createNextRequestWithJson({ content: "schema-x" }),
+    );
+
+    expect(res.status).toBe(200);
+
+    const body = await res.json();
+    expect(body).toEqual({
+      status: 401,
+      message: "Unauthorized",
+    });
+  });
+
+  it("POST returns 400 payload when content is not a string", async () => {
     vi.mocked(cookieHelper.getAccessTokenCookie).mockResolvedValue("token");
     vi.mocked(jwtLib.decrypt).mockResolvedValue({
       data: { type: "access", userId: 123 },
     });
 
-    const { fromMock } = mockSupabaseChainForUpsert({ upsertError: null });
+    const { fromMock } = mockSupabaseChainForUpsert({
+      upsertError: null,
+    });
+
     vi.mocked(supabaseSvc.createServiceClient).mockReturnValue({
       from: fromMock,
     } as unknown as ReturnType<typeof supabaseSvc.createServiceClient>);
 
     const res = await route.POST(createNextRequestWithJson({ content: 123 }));
 
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(200);
+
     const body = await res.json();
-    expect(body).toEqual({ error: "content is required" });
+    expect(body).toEqual({
+      status: 400,
+      message: "content is required",
+    });
+
     expect(fromMock).not.toHaveBeenCalled();
   });
 
-  it("POST returns 500 when upsert returns error", async () => {
+  it("POST returns 500 payload when upsert returns error", async () => {
     vi.mocked(cookieHelper.getAccessTokenCookie).mockResolvedValue("token");
     vi.mocked(jwtLib.decrypt).mockResolvedValue({
       data: { type: "access", userId: 123 },
@@ -209,9 +250,13 @@ describe("schema/route", () => {
       createNextRequestWithJson({ content: "schema-x" }),
     );
 
-    expect(res.status).toBe(500);
+    expect(res.status).toBe(200);
+
     const body = await res.json();
-    expect(body).toEqual({ error: "upsert failed" });
+    expect(body).toEqual({
+      status: 500,
+      message: "upsert failed",
+    });
   });
 
   it("POST returns success true when upsert succeeds", async () => {
@@ -233,8 +278,11 @@ describe("schema/route", () => {
     );
 
     expect(res.status).toBe(200);
+
     const body = await res.json();
-    expect(body).toEqual({ success: true });
+    expect(body).toEqual({
+      success: true,
+    });
 
     expect(upsertMock).toHaveBeenCalledTimes(1);
   });

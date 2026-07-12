@@ -4,7 +4,6 @@ import { useOrientation } from "./useOrientation";
 
 describe("useOrientation", () => {
   beforeEach(() => {
-    // Reset viewport before each test
     Object.defineProperty(window, "innerWidth", {
       writable: true,
       configurable: true,
