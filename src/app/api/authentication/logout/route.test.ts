@@ -89,9 +89,7 @@ describe("POST /api/authentication/logout", () => {
 
     expect(DATA).toEqual({
       status: 401,
-      message: "Вы не авторизованы",
-      messageMore:
-        "Вы не авторизованы, так как не указан Access Token в Cookie",
+      message: "NO_AUTH_NO_TOKEN",
     });
   });
 
@@ -110,8 +108,7 @@ describe("POST /api/authentication/logout", () => {
 
     expect(DATA).toEqual({
       status: 401,
-      message: "Вы не авторизованы",
-      messageMore: "Вы не авторизованы, так как Access Token просрочен",
+      message: "NO_AUTH_EXPIRED_TOKEN",
     });
   });
 
@@ -139,7 +136,7 @@ describe("POST /api/authentication/logout", () => {
 
     expect(DATA).toEqual({
       status: 200,
-      message: "Вы вышли из аккаунта",
+      message: "LOGOUT_SUCCESS",
     });
 
     expect(decrypt).toHaveBeenCalledWith("jwt-token");
