@@ -1,9 +1,10 @@
 "use client";
 
-import { getFormSchema } from "@/form-schemas/useFormSchema";
+import { useSignFormSchema } from "@/form-schemas/useSignFormSchema";
 import { useAuth } from "@/provider/AuthProvider";
 import ReactHookFormError from "@/shared/components/ReactHookFormError";
 import FormErrorMessage from "@/shared/components/SignForm/FormErrorMessage";
+import SignForm from "@/shared/components/SignForm/SignForm";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -44,7 +45,7 @@ export default function SignUpPage() {
       password: "",
     },
     resolver: yupResolver(
-      getFormSchema(VALIDATION_TRANSLATE),
+      useSignFormSchema(VALIDATION_TRANSLATE),
     ) as Resolver<IReactHookFormData>,
     mode: "onChange",
   });
@@ -114,80 +115,74 @@ export default function SignUpPage() {
   }
 
   return (
-    <main className="mx-auto max-w-md px-6 py-12">
-      <div className="rounded-lg border border-overlay bg-elevated p-8 shadow-sm">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-text-primary">{t("title")}</h1>
-          <p className="mt-2 text-text-muted">{t("subTitle")}</p>
-        </div>
-        <FormErrorMessage message={fetchError} />
-        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field, fieldState: { error } }) => {
-              const ID = "form__email";
-              return (
-                <div>
+    <SignForm title={t("title")} subTitle={t("subTitle")}>
+      <FormErrorMessage message={fetchError} />
+      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field, fieldState: { error } }) => {
+            const ID = "form__email";
+            return (
+              <div>
+                <label htmlFor={ID} className={LABEL_CLASS_NAME}>
+                  {t("emailTitle")}
+                </label>
+                <div className="mt-1 pt-1">
+                  <input
+                    id={ID}
+                    type="email"
+                    placeholder="example@host.local"
+                    className={INPUT_CLASS_NAME}
+                    {...field}
+                  />
+                </div>
+                <ReactHookFormError error={error} />
+              </div>
+            );
+          }}
+        />
+        <Controller
+          name="password"
+          control={control}
+          render={({ field, fieldState: { error } }) => {
+            const ID = "form__password";
+            return (
+              <div>
+                <div className="flex items-center justify-between">
                   <label htmlFor={ID} className={LABEL_CLASS_NAME}>
-                    {t("emailTitle")}
+                    {t("passwordTitle")}
                   </label>
-                  <div className="mt-1 pt-1">
-                    <input
-                      id={ID}
-                      type="email"
-                      placeholder="example@host.local"
-                      className={INPUT_CLASS_NAME}
-                      {...field}
-                    />
-                  </div>
-                  <ReactHookFormError error={error} />
                 </div>
-              );
-            }}
-          />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field, fieldState: { error } }) => {
-              const ID = "form__password";
-              return (
-                <div>
-                  <div className="flex items-center justify-between">
-                    <label htmlFor={ID} className={LABEL_CLASS_NAME}>
-                      {t("passwordTitle")}
-                    </label>
-                  </div>
-                  <div className="relative mt-1 pt-1">
-                    <input
-                      id={ID}
-                      type="password"
-                      placeholder="••••••••"
-                      className={INPUT_CLASS_NAME}
-                      {...field}
-                    />
-                  </div>
-                  <ReactHookFormError error={error} />
+                <div className="relative mt-1 pt-1">
+                  <input
+                    id={ID}
+                    type="password"
+                    placeholder="••••••••"
+                    className={INPUT_CLASS_NAME}
+                    {...field}
+                  />
                 </div>
-              );
-            }}
-          />
+                <ReactHookFormError error={error} />
+              </div>
+            );
+          }}
+        />
 
-          <button
-            type="submit"
-            className="w-full rounded-md bg-blue-600 text-white px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
-            disabled={!isValid || isFetch}
-          >
-            {isFetch ? t("sendingForm") : t("signUp")}
-          </button>
-        </form>
-        <p className="mt-6 text-center text-sm text-text-muted">
-          {t("haveAnAccount")}{" "}
-          <Link href="/sign-in" className={`font-mediumg ${LINK_CLASS_NAME}`}>
-            {t("signIn")}
-          </Link>
-        </p>
-      </div>
-    </main>
+        <button
+          type="submit"
+          className="w-full rounded-md bg-blue-600 text-white px-3 py-2 text-sm font-medium hover:bg-blue-500 disabled:bg-blue-300 disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={!isValid || isFetch}
+        >
+          {isFetch ? t("sendingForm") : t("signUp")}
+        </button>
+      </form>
+      <p className="mt-6 text-center text-sm text-text-muted">
+        {t("haveAnAccount")}{" "}
+        <Link href="/sign-in" className={`font-mediumg ${LINK_CLASS_NAME}`}>
+          {t("signIn")}
+        </Link>
+      </p>
+    </SignForm>
   );
 }

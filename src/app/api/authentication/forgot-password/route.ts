@@ -1,5 +1,5 @@
 import { ISupabaseForgetPasswordUsersDto } from "@/types/users";
-import { sendEmail } from "@/utils/emailLib";
+import sendEmail from "@/utils/sendEmail/sendEmail";
 import generateRandomPassword from "@/utils/generateRandomPassword/generateRandomPassword";
 import { generateHashPassword } from "@/utils/hashPasswordLib/hashPasswordLib";
 import isValidEmail from "@/utils/isValidEmail/isValidEmail";
