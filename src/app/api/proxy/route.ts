@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (err) {
     errorDetails = err instanceof Error ? err.message : String(err);
-    // Record failed request and return error
+
     try {
       const accessToken = await getAccessTokenCookie();
       if (accessToken) {

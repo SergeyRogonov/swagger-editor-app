@@ -10,61 +10,21 @@ interface IUserJwtData {
 }
 
 interface ISessionJwtPayload {
-  data: IUserJwtData; // данные (не обязательно в поле data)
-  iat?: number; // UNIX дата и время создания токена (issued at)
-  exp?: number; // UNIX дата и время просрочки токена (expiration time)
-  [key: string]: unknown; // данные (не обязательно в поле data)
+  data: IUserJwtData;
+  iat?: number;
+  exp?: number;
+  [key: string]: unknown;
 }
 
-/**
- *
- * @param payload
- *
- * Пусть у нас есть payload, тогда функция encrypt(payload) создает строковый JWT.
- *
- * - JWT состоит из трех частей: "алгоритм.данные.ключ". Расшифровку JWT ("aaa.ddd.kkk") можно смотреть на jwt.io.
- *  - aaa - алгоримт
- *      ```
- *      {
- *           alg: "HS256"
- *      }
- *      ```
- *  - ddd - данные c exp и iat
- *      ```
- *      {
- *           data: { userId: 1, type: 'access' },
- *           exp: 1782781111,
- *           iat: 1782781101
- *      }
- *      ```
- *  - kkk - хэш, который нужен для проверки, что токен не подделан, например, через jwt.io
- *
- * @returns jwt - токен формата "aaa.ddd.kkk"
- */
 export async function encrypt(payload: ISessionJwtPayload): Promise<string> {
   const JWT = await new SignJWT(payload)
     .setProtectedHeader({ alg: JWT_ALGORITHM })
     .setIssuedAt()
-    .setExpirationTime("100 sec from now")
+    .setExpirationTime("30d")
     .sign(JWT_KEY);
   return JWT;
 }
 
-/**
- *
- * @param stringJwt - JWT формата aaa.ddd.kkk
- *
- * Пусть у нас есть токен формата aaa.ddd.kkk, тогда функция decrypt("aaa.ddd.kkk") вернернет JS объект:
- * ```js
- * {
- *      data: { userId: 1, type: 'access' },
- *      exp: 1782781111,
- *      iat: 1782781101,
- * }
- * ```
- *
- * @returns payload - данные в JS объекте
- */
 export async function decrypt(stringJwt: string): Promise<ISessionJwtPayload> {
   const { payload } = await jwtVerify(stringJwt, JWT_KEY, {
     algorithms: [JWT_ALGORITHM],
