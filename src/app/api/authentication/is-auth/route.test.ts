@@ -32,10 +32,12 @@ describe("POST /api/authentication/is-auth", () => {
     vi.mocked(getAccessTokenCookie).mockResolvedValue("");
 
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(401);
+    expect(DATA.status).toBe(401);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 401,
       message: "Вы не авторизованы",
       messageMore:
         "Вы не авторизованы, так как не указан Access Token в Cookie",
@@ -51,10 +53,12 @@ describe("POST /api/authentication/is-auth", () => {
     );
 
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(401);
+    expect(DATA.status).toBe(401);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 401,
       message: "Вы не авторизованы",
       messageMore: "Вы не авторизованы, так как Access Token просрочен",
     });
@@ -62,10 +66,12 @@ describe("POST /api/authentication/is-auth", () => {
 
   it("returns 200 when access token is valid", async () => {
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(200);
+    expect(DATA.status).toBe(200);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 200,
       message: "Вы авторизованы",
     });
 
@@ -80,10 +86,12 @@ describe("POST /api/authentication/is-auth", () => {
     );
 
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
+    expect(DATA.status).toBe(500);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 500,
       message: "Error: cookie error",
     });
   });

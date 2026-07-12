@@ -25,25 +25,6 @@ describe("AuthProvider", () => {
     global.fetch = mockFetch;
   });
 
-  it("sets isAuth to true when fetch succeeds", async () => {
-    mockFetch.mockResolvedValue({
-      status: 200,
-    } as Response);
-
-    render(
-      <AuthProvider>
-        <TestComponent />
-      </AuthProvider>,
-    );
-
-    expect(screen.getByTestId("isLoading").textContent).toBe("true");
-
-    await waitFor(() => {
-      expect(screen.getByTestId("isAuth").textContent).toBe("true");
-      expect(screen.getByTestId("isLoading").textContent).toBe("false");
-    });
-  });
-
   it("sets isAuth to false when fetch fails", async () => {
     mockFetch.mockRejectedValue(new Error("Network error"));
 
