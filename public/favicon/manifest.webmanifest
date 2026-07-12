@@ -50,6 +50,6 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "start_url": "https://swagger-editor-app-sigma.vercel.app/",
+  "start_url": "/",
   "display": "standalone"
 }
