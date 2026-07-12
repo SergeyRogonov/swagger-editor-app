@@ -21,6 +21,14 @@ type HistoryRecord = {
   error_details: string | null;
 };
 
+type ProcessedHistoryRecord = HistoryRecord & {
+  methodColor: string;
+  statusClassName: string;
+  executedAtLabel: string;
+  responseBodyText: string;
+  responseHeadersText: string;
+};
+
 const METHOD_COLORS: Record<string, string> = {
   GET: "bg-blue-600",
   POST: "bg-green-600",
@@ -28,6 +36,37 @@ const METHOD_COLORS: Record<string, string> = {
   PATCH: "bg-orange-500",
   DELETE: "bg-red-600",
 };
+
+const getStatusClassName = (status: number) => {
+  if (status < 300) return "bg-green-800 text-green-200";
+  if (status < 500) return "bg-red-900 text-red-200";
+  return "bg-orange-900 text-orange-200";
+};
+
+const formatExecutedAt = (value: string) => new Date(value).toLocaleString();
+
+const formatResponseBody = (body: string | null) => {
+  if (!body) return null;
+
+  try {
+    return JSON.stringify(JSON.parse(body), null, 2);
+  } catch {
+    return body;
+  }
+};
+
+const getProcessedRecords = (
+  records: HistoryRecord[],
+  t: Awaited<ReturnType<typeof getTranslations>>,
+): ProcessedHistoryRecord[] =>
+  records.map((record) => ({
+    ...record,
+    methodColor: METHOD_COLORS[record.method] ?? "bg-text-muted",
+    statusClassName: getStatusClassName(record.res_status),
+    executedAtLabel: formatExecutedAt(record.executed_at),
+    responseBodyText: formatResponseBody(record.res_body) ?? t("none"),
+    responseHeadersText: JSON.stringify(record.res_headers, null, 2),
+  }));
 
 export default async function HistoryPage() {
   let records: HistoryRecord[] = [];
@@ -53,58 +92,53 @@ export default async function HistoryPage() {
   }
 
   const t = await getTranslations("history");
+  const processedRecords = getProcessedRecords(records, t);
+  const hasRecords = processedRecords.length > 0;
+  const emptyStateContent = t.rich("goTo", {
+    editor: (chunks) => (
+      <Link href="/" className="text-accent hover:underline">
+        {chunks}
+      </Link>
+    ),
+  });
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-8">
       <h1 className="text-3xl font-bold mb-6">{t("title")}</h1>
 
-      {records.length === 0 ? (
+      {!hasRecords ? (
         <div className="text-text-secondary space-y-3">
           <p>{t("empty")}</p>
-          <p>
-            {t.rich("goTo", {
-              editor: (chunks) => (
-                <Link href="/" className="text-accent hover:underline">
-                  {chunks}
-                </Link>
-              ),
-            })}
-          </p>
+          <p>{emptyStateContent}</p>
         </div>
       ) : (
         <div className="space-y-3">
-          {records.map((r) => (
+          {processedRecords.map((record) => (
             <details
-              key={r.id}
+              key={record.id}
               className="border border-overlay rounded overflow-hidden"
             >
               <summary className="flex items-center gap-3 px-4 py-3 bg-elevated cursor-pointer hover:bg-surface">
                 <span
-                  className={`text-xs font-bold px-2 py-0.5 rounded text-white ${METHOD_COLORS[r.method] ?? "bg-text-muted"}`}
+                  className={`text-xs font-bold px-2 py-0.5 rounded text-white ${record.methodColor}`}
                 >
-                  {r.method}
+                  {record.method}
                 </span>
                 <span className="font-mono text-sm text-text-primary flex-1 truncate">
-                  {r.url}
+                  {record.url}
                 </span>
                 <span
-                  className={`text-xs font-bold px-1.5 py-0.5 rounded ${
-                    r.res_status < 300
-                      ? "bg-green-800 text-green-200"
-                      : r.res_status < 500
-                        ? "bg-red-900 text-red-200"
-                        : "bg-orange-900 text-orange-200"
-                  }`}
+                  className={`text-xs font-bold px-1.5 py-0.5 rounded ${record.statusClassName}`}
                 >
-                  {r.res_status || "ERR"}
+                  {record.res_status || "ERR"}
                 </span>
-                {r.duration_ms != null && (
+                {record.duration_ms != null && (
                   <span className="text-text-secondary text-xs">
-                    {t("durationUnit", { duration: r.duration_ms })}
+                    {t("durationUnit", { duration: record.duration_ms })}
                   </span>
                 )}
                 <span className="text-text-muted text-xs">
-                  {new Date(r.executed_at).toLocaleString()}
+                  {record.executedAtLabel}
                 </span>
               </summary>
 
@@ -114,21 +148,21 @@ export default async function HistoryPage() {
                     <span className="uppercase font-semibold text-text-muted">
                       {t("method")}
                     </span>
-                    <p>{r.method}</p>
+                    <p>{record.method}</p>
                   </div>
                   <div>
                     <span className="uppercase font-semibold text-text-muted">
                       {t("status")}
                     </span>
-                    <p>{r.res_status || t("none")}</p>
+                    <p>{record.res_status || t("none")}</p>
                   </div>
                   <div>
                     <span className="uppercase font-semibold text-text-muted">
                       {t("duration")}
                     </span>
                     <p>
-                      {r.duration_ms != null
-                        ? t("durationUnit", { duration: r.duration_ms })
+                      {record.duration_ms != null
+                        ? t("durationUnit", { duration: record.duration_ms })
                         : t("none")}
                     </p>
                   </div>
@@ -136,15 +170,15 @@ export default async function HistoryPage() {
                     <span className="uppercase font-semibold text-text-muted">
                       {t("timestamp")}
                     </span>
-                    <p>{new Date(r.executed_at).toLocaleString()}</p>
+                    <p>{record.executedAtLabel}</p>
                   </div>
                   <div>
                     <span className="uppercase font-semibold text-text-muted">
                       {t("requestSize")}
                     </span>
                     <p>
-                      {r.req_size != null
-                        ? t("requestSizeUnit", { size: r.req_size })
+                      {record.req_size != null
+                        ? t("requestSizeUnit", { size: record.req_size })
                         : t("none")}
                     </p>
                   </div>
@@ -153,8 +187,8 @@ export default async function HistoryPage() {
                       {t("responseSize")}
                     </span>
                     <p>
-                      {r.res_size != null
-                        ? t("responseSizeUnit", { size: r.res_size })
+                      {record.res_size != null
+                        ? t("responseSizeUnit", { size: record.res_size })
                         : t("none")}
                     </p>
                   </div>
@@ -162,28 +196,28 @@ export default async function HistoryPage() {
                     <span className="uppercase font-semibold text-text-muted">
                       {t("endpoint")}
                     </span>
-                    <p className="font-mono truncate">{r.url}</p>
+                    <p className="font-mono truncate">{record.url}</p>
                   </div>
                 </div>
 
-                {r.error_details && (
+                {record.error_details && (
                   <div>
                     <span className="text-red-400 uppercase font-semibold">
                       {t("error")}
                     </span>
                     <pre className="mt-1 bg-base rounded p-2 text-red-300 overflow-auto max-h-24">
-                      {r.error_details}
+                      {record.error_details}
                     </pre>
                   </div>
                 )}
 
-                {r.req_body && (
+                {record.req_body && (
                   <div>
                     <span className="text-text-muted uppercase font-semibold">
                       {t("requestBody")}
                     </span>
                     <pre className="mt-1 bg-base rounded p-2 text-text-primary overflow-auto max-h-32">
-                      {r.req_body}
+                      {record.req_body}
                     </pre>
                   </div>
                 )}
@@ -193,19 +227,7 @@ export default async function HistoryPage() {
                     {t("responseBody")}
                   </span>
                   <pre className="mt-1 bg-base rounded p-2 text-text-primary overflow-auto max-h-40">
-                    {r.res_body
-                      ? (() => {
-                          try {
-                            return JSON.stringify(
-                              JSON.parse(r.res_body),
-                              null,
-                              2,
-                            );
-                          } catch {
-                            return r.res_body;
-                          }
-                        })()
-                      : t("none")}
+                    {record.responseBodyText}
                   </pre>
                 </div>
 
@@ -214,7 +236,7 @@ export default async function HistoryPage() {
                     {t("responseHeaders")}
                   </summary>
                   <pre className="mt-1 bg-base rounded p-2 text-text-secondary overflow-auto max-h-32">
-                    {JSON.stringify(r.res_headers, null, 2)}
+                    {record.responseHeadersText}
                   </pre>
                 </details>
               </div>
