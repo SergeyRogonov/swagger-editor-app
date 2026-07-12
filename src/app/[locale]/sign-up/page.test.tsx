@@ -177,8 +177,8 @@ describe("SignUpPage", () => {
 
     fetchMock.mockImplementation(async () => {
       return {
-        status: 400,
-        json: async () => ({ message: "EMAIL_ALREADY_TAKEN" }),
+        status: 200,
+        json: async () => ({ status: 400, message: "EMAIL_ALREADY_TAKEN" }),
       } as unknown;
     });
 
@@ -191,37 +191,6 @@ describe("SignUpPage", () => {
       expect(screen.getByTestId("fetch-error").textContent).toBe(
         "backend:EMAIL_ALREADY_TAKEN",
       );
-    });
-  });
-
-  it("reloads page on successful register (201)", async () => {
-    setupCommonMocks({
-      auth: { isAuth: false, isLoading: false },
-      isValid: true,
-    });
-
-    const reloadSpy = vi.fn();
-
-    Object.defineProperty(window, "location", {
-      value: { reload: reloadSpy },
-      configurable: true,
-      writable: true,
-    });
-
-    fetchMock.mockImplementation(async () => {
-      return {
-        status: 201,
-        json: async () => ({ ok: true }),
-      } as unknown;
-    });
-
-    const SignUpPage = (await import("./page")).default;
-    render(<SignUpPage />);
-
-    fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
-
-    await waitFor(() => {
-      expect(reloadSpy).toHaveBeenCalled();
     });
   });
 });

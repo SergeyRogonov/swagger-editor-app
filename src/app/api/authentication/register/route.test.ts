@@ -133,8 +133,12 @@ describe("POST /api/authentication/register", () => {
 
     const response = await POST(request);
 
-    expect(response.status).toBe(400);
-    expect(await response.json()).toEqual({
+    const DATA = await response.json();
+
+    expect(DATA.status).toBe(400);
+
+    expect(DATA).toEqual({
+      status: 400,
       message: "EMAIL_IS_REQUIRED",
     });
   });
@@ -152,8 +156,12 @@ describe("POST /api/authentication/register", () => {
 
     const response = await POST(request);
 
-    expect(response.status).toBe(400);
-    expect(await response.json()).toEqual({
+    const DATA = await response.json();
+
+    expect(DATA.status).toBe(400);
+
+    expect(DATA).toEqual({
+      status: 400,
       message: "INVALID_EMAIL",
     });
   });
@@ -167,9 +175,12 @@ describe("POST /api/authentication/register", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(400);
-    expect(await response.json()).toEqual({
+    expect(DATA.status).toBe(400);
+
+    expect(DATA).toEqual({
+      status: 400,
       message: "PASSWORD_IS_REQUIRED",
     });
   });
@@ -186,9 +197,12 @@ describe("POST /api/authentication/register", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(409);
-    expect(await response.json()).toEqual({
+    expect(DATA.status).toBe(409);
+
+    expect(DATA).toEqual({
+      status: 409,
       message: "EMAIL_ALREADY_TAKEN",
     });
   });
@@ -207,9 +221,12 @@ describe("POST /api/authentication/register", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
-    expect(await response.json()).toEqual({
+    expect(DATA.status).toBe(500);
+
+    expect(DATA).toEqual({
+      status: 500,
       message: "database error",
     });
   });
@@ -228,9 +245,12 @@ describe("POST /api/authentication/register", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
-    expect(await response.json()).toEqual({
+    expect(DATA.status).toBe(500);
+
+    expect(DATA).toEqual({
+      status: 500,
       message: "insert failed",
     });
   });
@@ -254,9 +274,12 @@ describe("POST /api/authentication/register", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
-    expect(await response.json()).toEqual({
+    expect(DATA.status).toBe(500);
+
+    expect(DATA).toEqual({
+      status: 500,
       message: "token insert failed",
     });
   });
@@ -276,10 +299,12 @@ describe("POST /api/authentication/register", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(201);
+    expect(DATA.status).toBe(201);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 201,
       message: "AUTH_SUCCESS",
       data: {
         accessToken: "jwt-token",
@@ -314,10 +339,12 @@ describe("POST /api/authentication/register", () => {
     } as unknown as NextRequest;
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
+    expect(DATA.status).toBe(500);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 500,
       message: "Error: invalid json",
     });
   });
