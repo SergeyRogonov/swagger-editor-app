@@ -65,31 +65,23 @@ export default function SignUpPage() {
         body: JSON.stringify(FORM_DATA),
       });
 
-      const HTTP_STATUS = RESPOSNE.status;
+      const DATA = await RESPOSNE.json();
+      const HTTP_STATUS = DATA.status;
       if (HTTP_STATUS !== 201) {
-        let message = "";
-        try {
-          const DATA = await RESPOSNE.json();
-          message = DATA.message;
+        let message = DATA.message;
 
-          switch (message) {
-            case "EMAIL_IS_REQUIRED":
-            case "INVALID_EMAIL":
-            case "PASSWORD_IS_REQUIRED":
-            case "EMAIL_ALREADY_TAKEN":
-            case "AUTH_SUCCESS":
-              message = BACKEND_REGISTER_TRANSLATE(message);
-              break;
-          }
-        } catch (exception) {
-          const TEXT = await RESPOSNE.text();
-          message = `${TEXT}\n${exception}`;
+        switch (message) {
+          case "EMAIL_IS_REQUIRED":
+          case "INVALID_EMAIL":
+          case "PASSWORD_IS_REQUIRED":
+          case "EMAIL_ALREADY_TAKEN":
+          case "AUTH_SUCCESS":
+            message = BACKEND_REGISTER_TRANSLATE(message);
+            break;
         }
 
         throw Error(`${message}`);
       }
-
-      await RESPOSNE.json();
 
       setFetchError(null);
       window.location.reload();

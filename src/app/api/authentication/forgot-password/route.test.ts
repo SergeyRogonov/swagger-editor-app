@@ -129,10 +129,12 @@ describe("POST /api/authentication/forgot-password", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(400);
+    expect(DATA.status).toBe(400);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 400,
       message: "EMAIL_IS_REQUIRED",
     });
   });
@@ -148,10 +150,12 @@ describe("POST /api/authentication/forgot-password", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(400);
+    expect(DATA.status).toBe(400);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 400,
       message: "INVALID_EMAIL",
     });
   });
@@ -169,10 +173,12 @@ describe("POST /api/authentication/forgot-password", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
+    expect(DATA.status).toBe(500);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 500,
       message: "database error",
     });
   });
@@ -188,10 +194,12 @@ describe("POST /api/authentication/forgot-password", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(404);
+    expect(DATA.status).toBe(404);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 404,
       message: "USER_NOT_FOUND",
     });
   });
@@ -209,10 +217,12 @@ describe("POST /api/authentication/forgot-password", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
+    expect(DATA.status).toBe(500);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 500,
       message: "update failed",
     });
   });
@@ -226,10 +236,12 @@ describe("POST /api/authentication/forgot-password", () => {
     });
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(200);
+    expect(DATA.status).toBe(200);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 200,
       message: "SUCCESS",
     });
 
@@ -260,10 +272,12 @@ describe("POST /api/authentication/forgot-password", () => {
     } as unknown as NextRequest;
 
     const response = await POST(request);
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
+    expect(DATA.status).toBe(500);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 500,
       message: "Error: invalid json",
     });
   });

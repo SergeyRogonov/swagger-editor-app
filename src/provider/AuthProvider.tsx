@@ -27,9 +27,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           method: "POST",
         });
 
+        const DATA = await RESPONSE.json();
+        const HTTP_STATUS = DATA.status;
+
         await AsyncSleep(200);
 
-        setIsAuth(RESPONSE.status === 200);
+        setIsAuth(HTTP_STATUS === 200);
       } catch {
         setIsAuth(false);
       } finally {

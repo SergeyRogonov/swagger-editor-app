@@ -18,11 +18,12 @@ export async function POST() {
     if (!ACCESS_TOKEN) {
       return NextResponse.json(
         {
+          status: 401,
           message: "Вы не авторизованы",
           messageMore:
             "Вы не авторизованы, так как не указан Access Token в Cookie",
         },
-        { status: 401 },
+        { status: 200 },
       );
     }
 
@@ -32,10 +33,11 @@ export async function POST() {
       if (exception instanceof JWTExpired) {
         return NextResponse.json(
           {
+            status: 401,
             message: "Вы не авторизованы",
             messageMore: "Вы не авторизованы, так как Access Token просрочен",
           },
-          { status: 401 },
+          { status: 200 },
         );
       }
     }
@@ -48,14 +50,16 @@ export async function POST() {
     if (errorRemoveAccessToken) {
       return NextResponse.json(
         {
+          status: 500,
           message: errorRemoveAccessToken.message,
         },
-        { status: 500 },
+        { status: 200 },
       );
     }
 
     const RESPONSE = NextResponse.json(
       {
+        status: 200,
         message: "Вы вышли из аккаунта",
       },
       { status: 200 },
@@ -67,9 +71,10 @@ export async function POST() {
   } catch (exception) {
     return NextResponse.json(
       {
+        status: 500,
         message: `${exception}`,
       },
-      { status: 500 },
+      { status: 200 },
     );
   }
 }
