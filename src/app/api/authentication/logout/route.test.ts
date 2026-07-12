@@ -83,10 +83,12 @@ describe("POST /api/authentication/logout", () => {
     vi.mocked(getAccessTokenCookie).mockResolvedValue("");
 
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(401);
+    expect(DATA.status).toBe(401);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 401,
       message: "Вы не авторизованы",
       messageMore:
         "Вы не авторизованы, так как не указан Access Token в Cookie",
@@ -102,10 +104,12 @@ describe("POST /api/authentication/logout", () => {
     );
 
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(401);
+    expect(DATA.status).toBe(401);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 401,
       message: "Вы не авторизованы",
       messageMore: "Вы не авторизованы, так как Access Token просрочен",
     });
@@ -117,20 +121,24 @@ describe("POST /api/authentication/logout", () => {
     };
 
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
+    expect(DATA.status).toBe(500);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 500,
       message: "database error",
     });
   });
 
   it("logs out successfully", async () => {
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(200);
+    expect(DATA.status).toBe(200);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 200,
       message: "Вы вышли из аккаунта",
     });
 
@@ -150,10 +158,12 @@ describe("POST /api/authentication/logout", () => {
     vi.mocked(createClient).mockRejectedValue(new Error("supabase failed"));
 
     const response = await POST();
+    const DATA = await response.json();
 
-    expect(response.status).toBe(500);
+    expect(DATA.status).toBe(500);
 
-    expect(await response.json()).toEqual({
+    expect(DATA).toEqual({
+      status: 500,
       message: "Error: supabase failed",
     });
   });
