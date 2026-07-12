@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { Header } from "./Header";
 import { mockNextIntl } from "@/test-utils/nextIntlMock";
@@ -15,6 +15,17 @@ vi.mock("next/link", () => ({
       {children}
     </a>
   ),
+}));
+
+vi.mock("./MobileNav", () => ({
+  __esModule: true,
+  default: ({
+    onOpenChange,
+  }: {
+    isAuth: boolean;
+    isOpen: boolean;
+    onOpenChange: (open: boolean) => void;
+  }) => <button onClick={() => onOpenChange(true)}>OpenMobileNav</button>,
 }));
 
 vi.mock("./LangSwitcher", () => ({
@@ -100,7 +111,24 @@ describe("Header", () => {
 
     render(<Header />);
 
-    expect(screen.getByText("LanguageSwitcher")).toBeInTheDocument();
-    expect(screen.getByText("ThemeToggle")).toBeInTheDocument();
+    expect(screen.getAllByText("LanguageSwitcher")).toHaveLength(2);
+    expect(screen.getAllByText("ThemeToggle")).toHaveLength(2);
+  });
+
+  it("shows and hides the mobile menu overlay", () => {
+    render(<Header />);
+
+    expect(document.querySelector(".fixed.inset-0")).toBeNull();
+
+    fireEvent.click(screen.getByText("OpenMobileNav"));
+
+    const overlay = document.querySelector(".fixed.inset-0");
+
+    expect(overlay).toBeInTheDocument();
+    expect(overlay).toHaveClass("bg-black/50");
+
+    fireEvent.click(overlay!);
+
+    expect(document.querySelector(".fixed.inset-0")).toBeNull();
   });
 });
